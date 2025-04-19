@@ -6,6 +6,7 @@ const popularStops = [
   { id: "900260009", name: "Flughafen BER" },
   { id: "900100009", name: "U Naturkundemuseum" },
   { id: "900100023", name: "U Rosenthaler Platz" },
+  { id: "900003201", name: "S+U Berlin Hauptbahnhof" },
 ]
 
 export default function Home() {
