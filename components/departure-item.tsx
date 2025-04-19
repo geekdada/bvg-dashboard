@@ -1,6 +1,7 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { formatTime, formatDelay, getDelayClass, getProductColor } from "@/lib/utils"
 
 interface DepartureItemProps {
@@ -41,18 +42,18 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
       <CardContent className="p-3 sm:p-4">
         <div className="flex items-center gap-2 sm:gap-4">
           <div
-            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-white font-bold text-sm sm:text-base ${productColor}`}
+            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-white font-bold text-sm sm:text-base line-clamp-1 ${productColor}`}
           >
             {line.name}
           </div>
 
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-1 sm:gap-0">
-              <h3 className="font-medium text-sm sm:text-base mr-1 line-clamp-1">{destinationText}</h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
               {platform && (
-                <span className="text-xs sm:text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">
+                <Badge variant="secondary" className="w-fit">
                   {platformText}
-                </span>
+                </Badge>
               )}
             </div>
 
