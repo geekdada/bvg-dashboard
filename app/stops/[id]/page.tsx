@@ -22,12 +22,12 @@ export default async function StopPage({ params }: { params: { id: string } }) {
       data.departures && data.departures.length > 0 ? data.departures[0].stop : { id: stopId, name: `Stop ${stopId}` }
 
     return (
-      <div className="container mx-auto py-6 px-4">
-        <div className="mb-6">
+      <div className="container mx-auto py-4 px-3 sm:py-6 sm:px-4 max-w-3xl">
+        <div className="mb-4 sm:mb-6">
           <Link href="/">
-            <Button variant="ghost" size="sm" className="flex items-center gap-2 mb-4">
+            <Button variant="ghost" size="sm" className="flex items-center gap-2 mb-2 sm:mb-4 -ml-2 h-8">
               <ArrowLeft className="h-4 w-4" />
-              Back to Home
+              <span className="text-sm">Back</span>
             </Button>
           </Link>
           <StopHeader stop={stopInfo} />
@@ -38,14 +38,14 @@ export default async function StopPage({ params }: { params: { id: string } }) {
   } catch (error) {
     console.error("Error fetching data:", error)
     return (
-      <div className="container mx-auto py-6 px-4">
+      <div className="container mx-auto py-4 px-3 sm:py-6 sm:px-4 max-w-3xl">
         <Link href="/">
-          <Button variant="ghost" size="sm" className="flex items-center gap-2 mb-4">
+          <Button variant="ghost" size="sm" className="flex items-center gap-2 mb-2 sm:mb-4 -ml-2 h-8">
             <ArrowLeft className="h-4 w-4" />
-            Back to Home
+            <span className="text-sm">Back</span>
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold mb-6">Error Loading Departures</h1>
+        <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Error Loading Departures</h1>
         <p className="text-red-500">
           Could not load departures for stop ID: {stopId}. Please check if the stop ID is correct.
         </p>

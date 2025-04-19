@@ -12,16 +12,16 @@ interface DepartureListProps {
 export default function DepartureList({ departures }: DepartureListProps) {
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Departures</h2>
+      <div className="flex justify-between items-center mb-3 sm:mb-4">
+        <h2 className="text-lg sm:text-xl font-semibold">Departures</h2>
         <Button
           variant="outline"
           size="sm"
-          className="flex items-center gap-2"
+          className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3"
           onClick={() => window.location.reload()}
         >
-          <RefreshCw className="h-4 w-4" />
-          Refresh
+          <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4" />
+          <span>Refresh</span>
         </Button>
       </div>
 
@@ -32,7 +32,7 @@ export default function DepartureList({ departures }: DepartureListProps) {
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {departures.map((departure) => (
             <DepartureItem key={`${departure.tripId}-${departure.plannedWhen}`} departure={departure} />
           ))}

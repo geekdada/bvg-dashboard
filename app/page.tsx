@@ -10,25 +10,27 @@ const popularStops = [
 
 export default function Home() {
   return (
-    <div className="container mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-2">BVG Departures Dashboard</h1>
-      <p className="text-gray-600 mb-8">View real-time departures for Berlin public transport</p>
+    <div className="container mx-auto py-6 sm:py-12 px-4 max-w-3xl">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">BVG Departures Dashboard</h1>
+      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
+        View real-time departures for Berlin public transport
+      </p>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Popular Stops</CardTitle>
-          <CardDescription>Select a stop to view departures</CardDescription>
+        <CardHeader className="pb-2 sm:pb-4">
+          <CardTitle className="text-lg sm:text-xl">Popular Stops</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">Select a stop to view departures</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {popularStops.map((stop) => (
               <Link
                 key={stop.id}
                 href={`/stops/${stop.id}`}
-                className="block p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                className="block p-3 sm:p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
-                <h3 className="font-medium">{stop.name}</h3>
-                <p className="text-sm text-gray-500">ID: {stop.id}</p>
+                <h3 className="font-medium text-sm sm:text-base">{stop.name}</h3>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">ID: {stop.id}</p>
               </Link>
             ))}
           </div>

@@ -38,26 +38,26 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
 
   return (
     <Card className="hover:shadow-md transition-shadow">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-4">
+      <CardContent className="p-3 sm:p-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <div
-            className={`flex items-center justify-center w-12 h-12 rounded-full text-white font-bold ${productColor}`}
+            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-white font-bold text-sm sm:text-base ${productColor}`}
           >
             {line.name}
           </div>
 
-          <div className="flex-1">
-            <div className="flex items-center">
-              <h3 className="font-medium">{destinationText}</h3>
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-1 sm:gap-0">
+              <h3 className="font-medium text-sm sm:text-base mr-1 line-clamp-1">{destinationText}</h3>
               {platform && (
-                <span className="ml-2 text-sm bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded font-mono">
+                <span className="text-xs sm:text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">
                   {platformText}
                 </span>
               )}
             </div>
 
             {remarks && remarks.length > 0 && (
-              <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+              <div className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-1">
                 {remarks.map((remark, i) => (
                   <span key={i} className="mr-2">
                     {remark.text}
@@ -67,9 +67,9 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
             )}
           </div>
 
-          <div className="text-right">
-            <div className="text-lg font-medium font-mono">{formatTime(when)}</div>
-            {delay !== 0 && <div className={`text-sm font-mono ${delayClass}`}>{formatDelay(delay)}</div>}
+          <div className="text-right flex-shrink-0 ml-1">
+            <div className="text-base sm:text-lg font-medium font-mono">{formatTime(when)}</div>
+            {delay !== 0 && <div className={`text-xs sm:text-sm font-mono ${delayClass}`}>{formatDelay(delay)}</div>}
           </div>
         </div>
       </CardContent>
