@@ -32,9 +32,6 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
   const delayClass = getDelayClass(delay)
   const productColor = getProductColor(line.product)
 
-  // Format platform text - replace "Pos." with "Gleis"
-  const platformText = platform ? platform.replace("Pos.", "Gleis") : ""
-
   // Use direction or destination name or fallback
   const destinationText = direction || departure.destination?.name || "Unknown destination"
 
@@ -56,7 +53,7 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
               <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
               {platform && (
                 <Badge variant="secondary" className="w-fit">
-                  {platformText}
+                  {platform}
                 </Badge>
               )}
             </div>
