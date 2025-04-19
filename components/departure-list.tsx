@@ -60,7 +60,7 @@ export default function DepartureList({ departures, stopLocation, stopName }: De
             disabled={isPending}
           >
             <RefreshCw className={`h-3 w-3 sm:h-4 sm:w-4 ${isPending ? "animate-spin" : ""}`} />
-            <span>{isPending ? "Refreshing..." : "Refresh"}</span>
+            <span className="hidden sm:inline">{isPending ? "Refreshing..." : "Refresh"}</span>
           </Button>
         </div>
       </div>
