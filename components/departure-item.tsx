@@ -76,7 +76,7 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
             <div className="bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-2 py-1 rounded text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
               {formatTime(when)}
             </div>
-            {delay !== 0 && (
+            {Boolean(delay) && (
               <div
                 className={`text-xs sm:text-sm font-mono mt-1 text-center flex items-center justify-center gap-1 ${delayClass}`}
               >
