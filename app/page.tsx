@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import StopSearch from "@/components/stop-search"
 
 // Example popular stops in Berlin
 const popularStops = [
@@ -16,6 +17,8 @@ export default function Home() {
       <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
         View real-time departures for Berlin public transport
       </p>
+
+      <StopSearch />
 
       <Card>
         <CardHeader className="pb-2 sm:pb-4">

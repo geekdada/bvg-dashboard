@@ -5,6 +5,7 @@ import DepartureItem from "./departure-item"
 import { Button } from "@/components/ui/button"
 import { RefreshCw } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useTransition, useState } from "react"
 
 interface DepartureListProps {
   departures: any[]
@@ -12,9 +13,12 @@ interface DepartureListProps {
 
 export default function DepartureList({ departures }: DepartureListProps) {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const handleRefresh = () => {
-    router.refresh()
+    startTransition(async () => {
+      await router.refresh()
+    })
   }
 
   return (
@@ -26,9 +30,10 @@ export default function DepartureList({ departures }: DepartureListProps) {
           size="sm"
           className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3"
           onClick={handleRefresh}
+          disabled={isPending}
         >
-          <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4" />
-          <span>Refresh</span>
+          <RefreshCw className={`h-3 w-3 sm:h-4 sm:w-4 ${isPending ? "animate-spin" : ""}`} />
+          <span>{isPending ? "Refreshing..." : "Refresh"}</span>
         </Button>
       </div>
 
