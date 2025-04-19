@@ -25,7 +25,10 @@ export default function Loading() {
       {/* Departures Header Skeleton */}
       <div className="flex justify-between items-center mb-3 sm:mb-4">
         <Skeleton className="h-6 sm:h-7 w-24" />
-        <Skeleton className="h-8 w-20" />
+        <div className="flex gap-2">
+          <Skeleton className="h-8 w-16" /> {/* Map button skeleton */}
+          <Skeleton className="h-8 w-20" /> {/* Refresh button skeleton */}
+        </div>
       </div>
 
       {/* Departure Items Skeleton */}

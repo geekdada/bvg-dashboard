@@ -32,7 +32,7 @@ export default async function StopPage({ params }: { params: { id: string } }) {
           </Link>
           <StopHeader stop={stopInfo} />
         </div>
-        <DepartureList departures={data.departures || []} />
+        <DepartureList departures={data.departures || []} stopLocation={stopInfo.location} stopName={stopInfo.name} />
       </div>
     )
   } catch (error) {
