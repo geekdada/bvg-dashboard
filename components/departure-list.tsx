@@ -4,12 +4,19 @@ import { Card, CardContent } from "@/components/ui/card"
 import DepartureItem from "./departure-item"
 import { Button } from "@/components/ui/button"
 import { RefreshCw } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 interface DepartureListProps {
   departures: any[]
 }
 
 export default function DepartureList({ departures }: DepartureListProps) {
+  const router = useRouter()
+
+  const handleRefresh = () => {
+    router.refresh()
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center mb-3 sm:mb-4">
@@ -18,7 +25,7 @@ export default function DepartureList({ departures }: DepartureListProps) {
           variant="outline"
           size="sm"
           className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3"
-          onClick={() => window.location.reload()}
+          onClick={handleRefresh}
         >
           <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4" />
           <span>Refresh</span>
