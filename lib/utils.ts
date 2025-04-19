@@ -11,10 +11,12 @@ export function formatTime(dateString: string): string {
 }
 
 export function formatDelay(seconds: number): string {
-  if (seconds === 0) return "On time"
+  if (seconds === 0) return ""
 
   const minutes = Math.floor(Math.abs(seconds) / 60)
   const sign = seconds > 0 ? "+" : "-"
+
+  if (seconds === 0) return ""
 
   return `${sign}${minutes} min`
 }

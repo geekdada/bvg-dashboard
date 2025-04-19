@@ -2,6 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Clock, Rabbit, Turtle } from "lucide-react"
 import { formatTime, formatDelay, getDelayClass, getProductColor } from "@/lib/utils"
 
 interface DepartureItemProps {
@@ -37,6 +38,9 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
   // Use direction or destination name or fallback
   const destinationText = direction || departure.destination?.name || "Unknown destination"
 
+  // Determine which icon to show based on delay
+  const DelayIcon = delay === 0 ? Clock : delay > 0 ? Turtle : Rabbit
+
   return (
     <Card className="hover:shadow-md transition-shadow">
       <CardContent className="p-3 sm:p-4">
@@ -69,8 +73,17 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
           </div>
 
           <div className="text-right flex-shrink-0 ml-1">
-            <div className="text-base sm:text-lg font-medium font-mono">{formatTime(when)}</div>
-            {delay !== 0 && <div className={`text-xs sm:text-sm font-mono ${delayClass}`}>{formatDelay(delay)}</div>}
+            <div className="bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-2 py-1 rounded text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
+              {formatTime(when)}
+            </div>
+            {delay !== 0 && (
+              <div
+                className={`text-xs sm:text-sm font-mono mt-1 text-center flex items-center justify-center gap-1 ${delayClass}`}
+              >
+                <DelayIcon className="h-3.5 w-3.5" />
+                <span>{formatDelay(delay)}</span>
+              </div>
+            )}
           </div>
         </div>
       </CardContent>
