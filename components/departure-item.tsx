@@ -42,11 +42,11 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
   const DelayIcon = delay === 0 ? Clock : delay > 0 ? Turtle : Rabbit
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card>
       <CardContent className="p-3 sm:p-4">
         <div className="flex items-center gap-2 sm:gap-4">
           <div
-            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-white font-bold text-sm sm:text-base line-clamp-1 ${productColor}`}
+            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-white font-bold text-sm sm:text-base line-clamp-1 text-center ${productColor}`}
           >
             {line.name}
           </div>
@@ -62,11 +62,16 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
             </div>
 
             {remarks && remarks.length > 0 && (
-              <div className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-1">
+              <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 {remarks.map((remark, i) => (
-                  <span key={i} className="mr-2">
-                    {remark.text}
-                  </span>
+                  <>
+                    {i !== 0 && "| "}
+                    <span
+                      key={i}
+                      className="mr-2 [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300"
+                      dangerouslySetInnerHTML={{ __html: remark.text }}
+                    />
+                  </>
                 ))}
               </div>
             )}
