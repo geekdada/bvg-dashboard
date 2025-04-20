@@ -61,14 +61,13 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
             {remarks && remarks.length > 0 && (
               <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 {remarks.map((remark, i) => (
-                  <>
-                    {i !== 0 && "| "}
+                  <React.Fragment key={remark.text}>
+                    {i !== 0 && <span> | </span>}
                     <span
-                      key={i}
-                      className="mr-2 [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300"
+                      className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300"
                       dangerouslySetInnerHTML={{ __html: remark.text }}
                     />
-                  </>
+                  </React.Fragment>
                 ))}
               </div>
             )}

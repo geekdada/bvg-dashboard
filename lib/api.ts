@@ -1,7 +1,5 @@
 export async function fetchDepartures(stopId: string) {
-  const response = await fetch(`https://v6.bvg.transport.rest/stops/${stopId}/departures?duration=30`, {
-    next: { revalidate: 30 }, // Revalidate every 30 seconds
-  })
+  const response = await fetch(`https://v6.bvg.transport.rest/stops/${stopId}/departures?duration=30`)
 
   if (!response.ok) {
     throw new Error(`Failed to fetch departures: ${response.status}`)
