@@ -1,9 +1,13 @@
 import type React from "react"
 import "./globals.css"
-import { Inter } from "next/font/google"
+import { Roboto } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 
-const inter = Inter({ subsets: ["latin"] })
+const roboto = Roboto({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+})
 
 export const metadata = {
   title: "BVG Departures Dashboard",
@@ -18,9 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${roboto.className} bg-bvg-yellow dark:bg-black`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main className="min-h-screen bg-gray-50 dark:bg-gray-900">{children}</main>
+          <main className="min-h-screen">{children}</main>
         </ThemeProvider>
       </body>
     </html>

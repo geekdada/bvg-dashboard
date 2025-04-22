@@ -40,23 +40,39 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
   const DelayIcon = delay === 0 ? Clock : delay > 0 ? Turtle : Rabbit
 
   return (
-    <Card>
-      <CardContent className="p-3 sm:p-4">
-        <div className="flex items-center gap-2 sm:gap-4">
+    <Card className="border-none shadow-md bvg-card overflow-hidden">
+      <CardContent className="p-0">
+        <div className="flex items-stretch">
           <div
-            className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-white font-bold text-sm sm:text-base line-clamp-1 text-center ${productColor}`}
+            className={`flex items-center justify-center w-14 sm:w-16 text-white font-bold text-sm sm:text-base text-center ${productColor}`}
           >
             {line.name}
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex flex-col gap-1">
-              <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
-              {platform && (
-                <Badge variant="secondary" className="w-fit">
-                  {platform}
-                </Badge>
-              )}
+          <div className="flex-1 min-w-0 p-3 sm:p-4">
+            <div className="flex justify-between items-start">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
+                {platform && (
+                  <Badge variant="outline" className="mt-1 bg-black text-bvg-yellow border-none">
+                    Platform {platform}
+                  </Badge>
+                )}
+              </div>
+
+              <div className="text-right flex-shrink-0 ml-1">
+                <div className="bg-black text-bvg-yellow px-2 py-1 rounded-sm text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
+                  {formatTime(when)}
+                </div>
+                {Boolean(delay) && (
+                  <div
+                    className={`text-xs sm:text-sm font-mono mt-1 text-center flex items-center justify-center gap-1 ${delayClass}`}
+                  >
+                    <DelayIcon className="h-3.5 w-3.5" />
+                    <span>{formatDelay(delay)}</span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {remarks && remarks.length > 0 && (
@@ -70,20 +86,6 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
                     />
                   </React.Fragment>
                 ))}
-              </div>
-            )}
-          </div>
-
-          <div className="text-right flex-shrink-0 ml-1">
-            <div className="bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-2 py-1 rounded text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
-              {formatTime(when)}
-            </div>
-            {Boolean(delay) && (
-              <div
-                className={`text-xs sm:text-sm font-mono mt-1 text-center flex items-center justify-center gap-1 ${delayClass}`}
-              >
-                <DelayIcon className="h-3.5 w-3.5" />
-                <span>{formatDelay(delay)}</span>
               </div>
             )}
           </div>

@@ -51,7 +51,14 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Add explicit colors for transport types
+        // BVG colors
+        bvg: {
+          yellow: "#FFE900",
+          black: "#000000",
+          gray: "#333333",
+          lightgray: "#F5F5F5",
+        },
+        // BVG transport colors
         transport: {
           suburban: "#006F35", // S-Bahn green
           subway: "#0066B3", // U-Bahn blue

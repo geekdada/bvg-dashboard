@@ -37,14 +37,14 @@ export default function DepartureList({ departures, stopLocation, stopName }: De
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-3 sm:mb-4">
+      <div className="flex justify-between items-center mb-3 sm:mb-4 bg-black text-bvg-yellow p-3 rounded-md">
         <h2 className="text-lg sm:text-xl font-semibold">Departures</h2>
         <div className="flex gap-2">
           {stopLocation && (
             <Button
               variant="outline"
               size="sm"
-              className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3"
+              className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
               onClick={openInGoogleMaps}
               title="Open in Google Maps"
             >
@@ -55,7 +55,7 @@ export default function DepartureList({ departures, stopLocation, stopName }: De
           <Button
             variant="outline"
             size="sm"
-            className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3"
+            className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
             onClick={handleRefresh}
             disabled={isPending}
           >
@@ -66,7 +66,7 @@ export default function DepartureList({ departures, stopLocation, stopName }: De
       </div>
 
       {departures.length === 0 ? (
-        <Card>
+        <Card className="border-none shadow-md bvg-card">
           <CardContent className="py-6">
             <p className="text-center text-gray-500">No departures found</p>
           </CardContent>

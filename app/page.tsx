@@ -13,25 +13,34 @@ const popularStops = [
 export default function Home() {
   return (
     <div className="container mx-auto py-6 sm:py-12 px-4 max-w-3xl">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">BVG Departures Dashboard</h1>
-      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
-        View real-time departures for Berlin public transport
-      </p>
+      <div className="flex items-center mb-6 sm:mb-8">
+        <div className="bg-black text-bvg-yellow p-2 mr-3 text-2xl font-bold">BVG</div>
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">Departures Dashboard</h1>
+          <p className="text-sm sm:text-base text-black dark:text-bvg-yellow">
+            Real-time departures for Berlin public transport
+          </p>
+        </div>
+      </div>
 
       <StopSearch />
 
-      <Card>
-        <CardHeader className="pb-2 sm:pb-4">
+      <Card className="border-none shadow-md bvg-card">
+        <CardHeader className="pb-2 sm:pb-4 bg-black text-bvg-yellow">
           <CardTitle className="text-lg sm:text-xl">Popular Stops</CardTitle>
-          <CardDescription className="text-xs sm:text-sm">Select a stop to view departures</CardDescription>
+          <CardDescription className="text-xs sm:text-sm text-gray-300">
+            Select a stop to view departures
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            {popularStops.map((stop) => (
+        <CardContent className="p-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            {popularStops.map((stop, index) => (
               <Link
                 key={stop.id}
                 href={`/stops/${stop.id}`}
-                className="block p-3 sm:p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                className={`block p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${
+                  index % 2 === 0 ? "border-r border-gray-200 dark:border-gray-700" : ""
+                } ${index < popularStops.length - 2 ? "border-b border-gray-200 dark:border-gray-700" : ""}`}
               >
                 <h3 className="font-medium text-sm sm:text-base">{stop.name}</h3>
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">ID: {stop.id}</p>
