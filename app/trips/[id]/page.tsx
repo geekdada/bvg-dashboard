@@ -102,7 +102,6 @@ export default async function TripPage({ params }: { params: { id: string } }) {
         {remarks && remarks.length > 0 && (
           <Card className="border-none shadow-md">
             <CardHeader className="pb-2 bg-black text-bvg-yellow flex flex-row items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
               <CardTitle className="text-lg">Remarks</CardTitle>
             </CardHeader>
             <CardContent className="p-4">
