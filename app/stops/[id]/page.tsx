@@ -28,7 +28,7 @@ export default async function StopPage({ params }: { params: { id: string } }) {
             <Button
               variant="outline"
               size="sm"
-              className="flex items-center gap-2 mb-2 sm:mb-4 -ml-2 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
+              className="flex items-center gap-2 mb-2 sm:mb-4 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
             >
               <ArrowLeft className="h-4 w-4" />
               <span className="text-sm">Back</span>
@@ -48,7 +48,7 @@ export default async function StopPage({ params }: { params: { id: string } }) {
             <Button
               variant="outline"
               size="sm"
-              className="flex items-center gap-2 mb-2 sm:mb-4 -ml-2 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
+              className="flex items-center gap-2 mb-2 sm:mb-4 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
             >
               <ArrowLeft className="h-4 w-4" />
               <span className="text-sm">Back</span>

@@ -30,3 +30,22 @@ export async function searchStops(query: string) {
   const data = await response.json()
   return data
 }
+
+export async function fetchTripDetails(tripId: string) {
+  const params = new URLSearchParams({
+    stopovers: "true",
+    remarks: "true",
+    polyline: "false",
+    language: "en",
+    pretty: "true",
+  })
+
+  const response = await fetch(`https://v6.bvg.transport.rest/trips/${tripId}?${params.toString()}`)
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch trip details: ${response.status}`)
+  }
+
+  const data = await response.json()
+  return data
+}

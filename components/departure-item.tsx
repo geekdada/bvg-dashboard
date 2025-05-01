@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Clock, Rabbit, Turtle } from "lucide-react"
 import { formatTime, formatDelay, getDelayClass, getProductColor } from "@/lib/utils"
+import Link from "next/link"
 
 interface DepartureItemProps {
   departure: {
@@ -28,7 +29,7 @@ interface DepartureItemProps {
 }
 
 export default function DepartureItem({ departure }: DepartureItemProps) {
-  const { when, plannedWhen, delay = 0, platform, direction, line, remarks } = departure
+  const { when, plannedWhen, delay = 0, platform, direction, line, remarks, tripId } = departure
 
   const delayClass = getDelayClass(delay)
   const productColor = getProductColor(line.product)
@@ -43,16 +44,20 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
     <Card className="border-none shadow-md bvg-card overflow-hidden">
       <CardContent className="p-0">
         <div className="flex items-stretch">
-          <div
-            className={`flex items-center justify-center w-14 sm:w-16 text-white font-bold text-sm sm:text-base text-center ${productColor}`}
+          <Link
+            href={`/trips/${tripId}`}
+            className={`flex items-center justify-center w-14 sm:w-16 text-white font-bold text-sm sm:text-base text-center ${productColor} hover:opacity-90 transition-opacity cursor-pointer`}
+            title="View trip details"
           >
             {line.name}
-          </div>
+          </Link>
 
           <div className="flex-1 min-w-0 p-3 sm:p-4">
             <div className="flex justify-between items-start">
               <div className="flex-1 min-w-0">
-                <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
+                </div>
                 {platform && (
                   <Badge variant="outline" className="mt-1 bg-black text-bvg-yellow border-none">
                     Platform {platform}
