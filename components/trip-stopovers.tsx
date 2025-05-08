@@ -44,9 +44,7 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
         return (
           <div key={`${stopover.stop.id}-${index}`} className="relative">
             <div
-              className={`absolute left-3 top-0 h-full w-0.5 ${
-                isPast ? "bg-gray-300" : "bg-black dark:bg-bvg-yellow"
-              }`}
+              className={`absolute left-3 top-0 h-full w-0.5 ${isPast ? "bg-gray-300" : "bg-black dark:bg-bvg-yellow"}`}
             ></div>
 
             <div className="flex items-start gap-4 py-2">
@@ -93,7 +91,7 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                   <div className="text-right">
                     {/* Show departure time if available, otherwise show arrival time for the last stop */}
                     {(stopover.departure || (isLast && stopover.arrival)) && (
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex flex-col items-end">
                         <span className={`text-sm font-mono ${isPast ? "text-gray-500" : ""}`}>
                           {formatTime(stopover.departure || stopover.arrival)}
                         </span>
@@ -102,14 +100,18 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                         {((stopover.departureDelay !== 0 && stopover.departureDelay !== undefined) ||
                           (isLast && stopover.arrivalDelay !== 0 && stopover.arrivalDelay !== undefined)) && (
                           <span
-                            className={`text-xs font-mono flex items-center ${getDelayClass(
+                            className={`text-xs font-mono flex items-center mt-1 ${getDelayClass(
                               stopover.departureDelay || stopover.arrivalDelay,
                             )}`}
                           >
-                            {(stopover.departureDelay || stopover.arrivalDelay) > 0 ? (
-                              <Turtle className="h-3 w-3 mr-1" />
-                            ) : (
-                              <Rabbit className="h-3 w-3 mr-1" />
+                            {formatDelay(stopover.departureDelay || stopover.arrivalDelay) && (
+                              <>
+                                {(stopover.departureDelay || stopover.arrivalDelay) > 0 ? (
+                                  <Turtle className="h-3 w-3 mr-1" />
+                                ) : (
+                                  <Rabbit className="h-3 w-3 mr-1" />
+                                )}
+                              </>
                             )}
                             {formatDelay(stopover.departureDelay || stopover.arrivalDelay)}
                           </span>

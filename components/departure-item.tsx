@@ -41,61 +41,61 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
   const DelayIcon = delay === 0 ? Clock : delay > 0 ? Turtle : Rabbit
 
   return (
-    <Card className="border-none shadow-md bvg-card overflow-hidden">
-      <CardContent className="p-0">
-        <div className="flex items-stretch">
-          <Link
-            href={`/trips/${tripId}`}
-            className={`flex items-center justify-center w-14 sm:w-16 text-white font-bold text-sm sm:text-base text-center ${productColor} hover:opacity-90 transition-opacity cursor-pointer`}
-            title="View trip details"
-          >
-            {line.name}
-          </Link>
-
-          <div className="flex-1 min-w-0 p-3 sm:p-4">
-            <div className="flex justify-between items-start">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
-                </div>
-                {platform && (
-                  <Badge variant="outline" className="mt-1 bg-black text-bvg-yellow border-none">
-                    Platform {platform}
-                  </Badge>
-                )}
-              </div>
-
-              <div className="text-right flex-shrink-0 ml-1">
-                <div className="bg-black text-bvg-yellow px-2 py-1 rounded-sm text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
-                  {formatTime(when)}
-                </div>
-                {Boolean(delay) && (
-                  <div
-                    className={`text-xs sm:text-sm font-mono mt-1 text-center flex items-center justify-center gap-1 ${delayClass}`}
-                  >
-                    <DelayIcon className="h-3.5 w-3.5" />
-                    <span>{formatDelay(delay)}</span>
-                  </div>
-                )}
-              </div>
+    <Link href={`/trips/${tripId}`} className="block hover:opacity-95 transition-opacity">
+      <Card className="border-none shadow-md bvg-card overflow-hidden">
+        <CardContent className="p-0">
+          <div className="flex items-stretch">
+            <div
+              className={`flex items-center justify-center w-14 sm:w-16 text-white font-bold text-sm sm:text-base text-center ${productColor}`}
+            >
+              {line.name}
             </div>
 
-            {remarks && remarks.length > 0 && (
-              <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                {remarks.map((remark, i) => (
-                  <React.Fragment key={remark.text}>
-                    {i !== 0 && <span> | </span>}
-                    <span
-                      className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300"
-                      dangerouslySetInnerHTML={{ __html: remark.text }}
-                    />
-                  </React.Fragment>
-                ))}
+            <div className="flex-1 min-w-0 p-3 sm:p-4">
+              <div className="flex justify-between items-start">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
+                  </div>
+                  {platform && (
+                    <Badge variant="outline" className="mt-1 bg-black text-bvg-yellow border-none">
+                      Platform {platform}
+                    </Badge>
+                  )}
+                </div>
+
+                <div className="text-right flex-shrink-0 ml-1">
+                  <div className="bg-black text-bvg-yellow px-2 py-1 rounded-sm text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
+                    {formatTime(when)}
+                  </div>
+                  {Boolean(delay) && (
+                    <div
+                      className={`text-xs sm:text-sm font-mono mt-1 text-center flex items-center justify-center gap-1 ${delayClass}`}
+                    >
+                      <DelayIcon className="h-3.5 w-3.5" />
+                      <span>{formatDelay(delay)}</span>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
+
+              {remarks && remarks.length > 0 && (
+                <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  {remarks.map((remark, i) => (
+                    <React.Fragment key={remark.text}>
+                      {i !== 0 && <span> | </span>}
+                      <span
+                        className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300"
+                        dangerouslySetInnerHTML={{ __html: remark.text }}
+                      />
+                    </React.Fragment>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   )
 }

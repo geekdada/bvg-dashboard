@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import { fetchTripDetails } from "@/lib/api"
-import { Clock, Users, AlertTriangle } from "lucide-react"
+import { Clock, Users } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import TripStopovers from "@/components/trip-stopovers"
@@ -33,9 +33,10 @@ export default async function TripPage({ params }: { params: { id: string } }) {
 
           <div className="flex items-center gap-3">
             <div
-              className={`flex items-center justify-center w-12 h-12 text-white font-bold text-lg rounded-full ${getProductColor(line.product)}`}
+              className={`flex items-center justify-center w-12 h-12 text-white font-bold text-lg rounded-full overflow-hidden ${getProductColor(line.product)}`}
+              style={{ minWidth: "3rem", minHeight: "3rem" }}
             >
-              {line.name}
+              <span className="text-center truncate px-1">{line.name}</span>
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 line-clamp-2">
