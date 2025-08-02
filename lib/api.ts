@@ -1,51 +1,113 @@
-export async function fetchDepartures(stopId: string) {
-  const response = await fetch(`https://v6.bvg.transport.rest/stops/${stopId}/departures?duration=30`)
+import type { 
+  DeparturesResponse, 
+  SearchResponse, 
+  TripResponse, 
+  APIError 
+} from './types'
+import { BVG_CONFIG } from './config'
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch departures: ${response.status}`)
+class BVGAPIError extends Error {
+  constructor(
+    message: string,
+    public status: number,
+    public code?: string
+  ) {
+    super(message)
+    this.name = 'BVGAPIError'
   }
-
-  const data = await response.json()
-  return data
 }
 
-export async function searchStops(query: string) {
-  // Don't search if query is too short
-  if (!query || query.length < 2) return []
-
-  const params = new URLSearchParams({
-    query,
-    addresses: "false",
-    poi: "false",
-    results: "10",
-    fuzzy: "true",
-  })
-
-  const response = await fetch(`https://v6.bvg.transport.rest/locations?${params.toString()}`)
-
+async function handleAPIResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    throw new Error(`Failed to search stops: ${response.status}`)
+    const errorText = await response.text().catch(() => 'Unknown error')
+    throw new BVGAPIError(
+      `API request failed: ${errorText}`,
+      response.status
+    )
   }
 
-  const data = await response.json()
-  return data
+  try {
+    return await response.json()
+  } catch (error) {
+    throw new BVGAPIError(
+      'Failed to parse API response',
+      response.status
+    )
+  }
 }
 
-export async function fetchTripDetails(tripId: string) {
-  const params = new URLSearchParams({
-    stopovers: "true",
-    remarks: "true",
-    polyline: "false",
-    language: "en",
-    pretty: "true",
-  })
-
-  const response = await fetch(`https://v6.bvg.transport.rest/trips/${tripId}?${params.toString()}`)
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch trip details: ${response.status}`)
+export async function fetchDepartures(stopId: string): Promise<DeparturesResponse> {
+  if (!stopId?.trim()) {
+    throw new BVGAPIError('Stop ID is required', 400)
   }
 
-  const data = await response.json()
-  return data
+  const url = new URL(`${BVG_CONFIG.apiBaseUrl}/stops/${encodeURIComponent(stopId)}/departures`)
+  url.searchParams.set('duration', BVG_CONFIG.defaultDuration.toString())
+
+  try {
+    const response = await fetch(url.toString())
+    return await handleAPIResponse<DeparturesResponse>(response)
+  } catch (error) {
+    if (error instanceof BVGAPIError) {
+      throw error
+    }
+    throw new BVGAPIError(
+      'Network error while fetching departures',
+      0
+    )
+  }
 }
+
+export async function searchStops(query: string): Promise<SearchResponse[]> {
+  if (!query || query.length < BVG_CONFIG.searchMinLength) {
+    return []
+  }
+
+  const url = new URL(`${BVG_CONFIG.apiBaseUrl}/locations`)
+  url.searchParams.set('query', query.trim())
+  url.searchParams.set('addresses', 'false')
+  url.searchParams.set('poi', 'false')
+  url.searchParams.set('results', BVG_CONFIG.searchMaxResults.toString())
+  url.searchParams.set('fuzzy', 'true')
+
+  try {
+    const response = await fetch(url.toString())
+    return await handleAPIResponse<SearchResponse[]>(response)
+  } catch (error) {
+    if (error instanceof BVGAPIError) {
+      throw error
+    }
+    throw new BVGAPIError(
+      'Network error while searching stops',
+      0
+    )
+  }
+}
+
+export async function fetchTripDetails(tripId: string): Promise<TripResponse> {
+  if (!tripId?.trim()) {
+    throw new BVGAPIError('Trip ID is required', 400)
+  }
+
+  const url = new URL(`${BVG_CONFIG.apiBaseUrl}/trips/${encodeURIComponent(tripId)}`)
+  url.searchParams.set('stopovers', 'true')
+  url.searchParams.set('remarks', 'true')
+  url.searchParams.set('polyline', 'false')
+  url.searchParams.set('language', 'en')
+  url.searchParams.set('pretty', 'true')
+
+  try {
+    const response = await fetch(url.toString())
+    return await handleAPIResponse<TripResponse>(response)
+  } catch (error) {
+    if (error instanceof BVGAPIError) {
+      throw error
+    }
+    throw new BVGAPIError(
+      'Network error while fetching trip details',
+      0
+    )
+  }
+}
+
+export { BVGAPIError }

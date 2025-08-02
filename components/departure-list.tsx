@@ -2,19 +2,12 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import DepartureItem from "./departure-item"
-import { Button } from "@/components/ui/button"
+import { BVGButton } from "@/components/ui/bvg-button"
 import { RefreshCw, Map } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTransition } from "react"
-
-interface DepartureListProps {
-  departures: any[]
-  stopLocation?: {
-    latitude: number
-    longitude: number
-  }
-  stopName?: string
-}
+import { getGoogleMapsUrl } from "@/lib/utils"
+import type { DepartureListProps } from "@/lib/types"
 
 export default function DepartureList({ departures, stopLocation, stopName }: DepartureListProps) {
   const router = useRouter()
@@ -29,10 +22,10 @@ export default function DepartureList({ departures, stopLocation, stopName }: De
   const openInGoogleMaps = () => {
     if (!stopLocation) return
 
-    const { latitude, longitude } = stopLocation
-    const query = stopName ? encodeURIComponent(stopName) : `${latitude},${longitude}`
-    const url = `https://www.google.com/maps/search/?api=1&query=${query}`
-    window.open(url, "_blank", "noopener,noreferrer")
+    const url = getGoogleMapsUrl(stopLocation, stopName)
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer")
+    }
   }
 
   return (
@@ -41,27 +34,23 @@ export default function DepartureList({ departures, stopLocation, stopName }: De
         <h2 className="text-lg sm:text-xl font-semibold">Departures</h2>
         <div className="flex gap-2">
           {stopLocation && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
+            <BVGButton
               onClick={openInGoogleMaps}
               title="Open in Google Maps"
+              className="flex items-center gap-1 sm:gap-2"
             >
               <Map className="h-3 w-3 sm:h-4 sm:w-4" />
               <span className="hidden sm:inline">Map</span>
-            </Button>
+            </BVGButton>
           )}
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex items-center gap-1 sm:gap-2 h-8 text-xs sm:text-sm px-2 sm:px-3 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
+          <BVGButton
             onClick={handleRefresh}
             disabled={isPending}
+            className="flex items-center gap-1 sm:gap-2"
           >
             <RefreshCw className={`h-3 w-3 sm:h-4 sm:w-4 ${isPending ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline">{isPending ? "Refreshing..." : "Refresh"}</span>
-          </Button>
+          </BVGButton>
         </div>
       </div>
 

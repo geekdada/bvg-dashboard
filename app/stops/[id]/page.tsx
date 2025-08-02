@@ -6,11 +6,12 @@ import { fetchDepartures } from "@/lib/api"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export default async function StopPage({ params }: { params: { id: string } }) {
-  const stopId = params.id
+export default async function StopPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const stopId = id
 
   if (!stopId) {
-    notFound()
+    return notFound()
   }
 
   try {
@@ -19,7 +20,11 @@ export default async function StopPage({ params }: { params: { id: string } }) {
 
     // Extract stop info from the first departure if available
     const stopInfo =
-      data.departures && data.departures.length > 0 ? data.departures[0].stop : { id: stopId, name: `Stop ${stopId}` }
+      data.departures && data.departures.length > 0 ? data.departures[0].stop : undefined
+
+    if (!stopInfo) {
+      return notFound()
+    }
 
     return (
       <div className="container mx-auto py-4 px-3 sm:py-6 sm:px-4 max-w-3xl">

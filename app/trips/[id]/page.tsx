@@ -7,8 +7,9 @@ import TripStopovers from "@/components/trip-stopovers"
 import { getProductColor, formatTime } from "@/lib/utils"
 import { BackButton } from "@/components/back-button"
 
-export default async function TripPage({ params }: { params: { id: string } }) {
-  const tripId = params.id
+export default async function TripPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const tripId = decodeURIComponent(id)
 
   if (!tripId) {
     notFound()
