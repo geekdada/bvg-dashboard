@@ -6,27 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Clock, Rabbit, Turtle } from "lucide-react"
 import { formatTime, formatDelay, getDelayClass, getProductColor } from "@/lib/utils"
 import Link from "next/link"
-
-interface DepartureItemProps {
-  departure: {
-    tripId: string
-    when: string
-    plannedWhen?: string
-    delay?: number
-    platform?: string
-    direction?: string
-    line: {
-      name: string
-      product: string
-    }
-    remarks?: Array<{
-      text: string
-    }>
-    destination?: {
-      name: string
-    }
-  }
-}
+import type { DepartureItemProps } from "@/lib/types"
 
 export default function DepartureItem({ departure }: DepartureItemProps) {
   const { when, plannedWhen, delay = 0, platform, direction, line, remarks, tripId } = departure
@@ -38,7 +18,7 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
   const destinationText = direction || departure.destination?.name || "Unknown destination"
 
   // Determine which icon to show based on delay
-  const DelayIcon = delay === 0 ? Clock : delay > 0 ? Turtle : Rabbit
+  const DelayIcon = (delay || 0) === 0 ? Clock : (delay || 0) > 0 ? Turtle : Rabbit
 
   return (
     <Link href={`/trips/${tripId}`} className="block hover:opacity-95 transition-opacity">
@@ -66,7 +46,7 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
 
                 <div className="text-right flex-shrink-0 ml-1">
                   <div className="bg-black text-bvg-yellow px-2 py-1 rounded-sm text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
-                    {formatTime(when)}
+                    {formatTime(when || plannedWhen || '')}
                   </div>
                   {Boolean(delay) && (
                     <div

@@ -20,10 +20,20 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
 
     // Extract data from the response
     const { line, direction, stopovers, occupancy, remarks } = tripData.trip || tripData
+    
+    if (!stopovers || stopovers.length === 0) {
+      notFound()
+    }
+    
     const origin = stopovers[0]
     const destination = stopovers[stopovers.length - 1]
     const departureTime = origin.departure || origin.plannedDeparture
     const arrivalTime = destination.arrival || destination.plannedArrival
+    
+    if (!departureTime || !arrivalTime) {
+      notFound()
+    }
+    
     const duration = new Date(arrivalTime).getTime() - new Date(departureTime).getTime()
     const durationMinutes = Math.floor(duration / 60000)
 

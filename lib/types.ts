@@ -52,6 +52,9 @@ export interface Trip {
   origin?: Stop
   destination?: Stop
   currentTripPosition?: Location
+  stopovers?: Stopover[]
+  occupancy?: 'low' | 'medium' | 'high'
+  remarks?: Remark[]
 }
 
 export interface Departure {
@@ -128,7 +131,7 @@ export type TransportProduct =
   | 'express'
   | 'regional'
 
-// UI Component Props Types
+// UI Component Props Types  
 export interface DepartureItemProps {
   departure: Departure
 }

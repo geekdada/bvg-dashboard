@@ -131,7 +131,7 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                 {/* Remarks */}
                 {stopover.remarks && stopover.remarks.length > 0 && (
                   <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    {stopover.remarks.map((remark, i) => (
+                    {stopover.remarks.map((remark: any, i: number) => (
                       <React.Fragment key={i}>
                         {i !== 0 && <span> | </span>}
                         <span
