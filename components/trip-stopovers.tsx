@@ -1,30 +1,9 @@
 import React from "react"
-import { formatTime, getDelayClass, formatDelay } from "@/lib/utils"
-import { Rabbit, Turtle, Users } from "lucide-react"
+import { Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import TimeDisplay from "@/components/time-display"
+import DelayDisplay from "@/components/delay-display"
 
-interface StopoverProps {
-  stopover: {
-    stop: {
-      id: string
-      name: string
-    }
-    arrival?: string
-    plannedArrival?: string
-    arrivalDelay?: number
-    arrivalPlatform?: string
-    departure?: string
-    plannedDeparture?: string
-    departureDelay?: number
-    departurePlatform?: string
-    remarks?: Array<any>
-    occupancy?: "low" | "medium" | "high"
-  }
-  isFirst: boolean
-  isLast: boolean
-  isPast: boolean
-  isCurrent: boolean
-}
 
 export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
   const now = new Date()
@@ -92,30 +71,17 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                     {/* Show departure time if available, otherwise show arrival time for the last stop */}
                     {(stopover.departure || (isLast && stopover.arrival)) && (
                       <div className="flex flex-col items-end">
-                        <span className={`text-sm font-mono ${isPast ? "text-gray-500" : ""}`}>
-                          {formatTime(stopover.departure || stopover.arrival)}
-                        </span>
+                        <TimeDisplay 
+                          time={stopover.departure || stopover.arrival}
+                          className={isPast ? "text-gray-500" : ""}
+                        />
 
                         {/* Show delay if available */}
-                        {((stopover.departureDelay !== 0 && stopover.departureDelay !== undefined) ||
-                          (isLast && stopover.arrivalDelay !== 0 && stopover.arrivalDelay !== undefined)) && (
-                          <span
-                            className={`text-xs font-mono flex items-center mt-1 ${getDelayClass(
-                              stopover.departureDelay || stopover.arrivalDelay,
-                            )}`}
-                          >
-                            {formatDelay(stopover.departureDelay || stopover.arrivalDelay) && (
-                              <>
-                                {(stopover.departureDelay || stopover.arrivalDelay) > 0 ? (
-                                  <Turtle className="h-3 w-3 mr-1" />
-                                ) : (
-                                  <Rabbit className="h-3 w-3 mr-1" />
-                                )}
-                              </>
-                            )}
-                            {formatDelay(stopover.departureDelay || stopover.arrivalDelay)}
-                          </span>
-                        )}
+                        <DelayDisplay 
+                          delay={stopover.departureDelay || stopover.arrivalDelay}
+                          className="mt-1"
+                          size="sm"
+                        />
                       </div>
                     )}
                   </div>

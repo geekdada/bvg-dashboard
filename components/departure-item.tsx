@@ -2,23 +2,21 @@
 
 import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Clock, Rabbit, Turtle } from "lucide-react"
-import { formatTime, formatDelay, getDelayClass, getProductColor } from "@/lib/utils"
+import { getProductColor } from "@/lib/utils"
 import Link from "next/link"
 import type { DepartureItemProps } from "@/lib/types"
+import TimeDisplay from "@/components/time-display"
+import DelayDisplay from "@/components/delay-display"
+import PlatformBadge from "@/components/platform-badge"
+import RemarksDisplay from "@/components/remarks-display"
 
 export default function DepartureItem({ departure }: DepartureItemProps) {
   const { when, plannedWhen, delay = 0, platform, direction, line, remarks, tripId } = departure
 
-  const delayClass = getDelayClass(delay)
   const productColor = getProductColor(line.product)
 
   // Use direction or destination name or fallback
   const destinationText = direction || departure.destination?.name || "Unknown destination"
-
-  // Determine which icon to show based on delay
-  const DelayIcon = (delay || 0) === 0 ? Clock : (delay || 0) > 0 ? Turtle : Rabbit
 
   return (
     <Link href={`/trips/${tripId}`} className="block hover:opacity-95 transition-opacity">
@@ -37,41 +35,23 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
                   <div className="flex items-center gap-2">
                     <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
                   </div>
-                  {platform && (
-                    <Badge variant="outline" className="mt-1 bg-black text-bvg-yellow border-none">
-                      Platform {platform}
-                    </Badge>
-                  )}
+                  <PlatformBadge platform={platform || undefined} className="mt-1" />
                 </div>
 
                 <div className="text-right flex-shrink-0 ml-1">
-                  <div className="bg-black text-bvg-yellow px-2 py-1 rounded-sm text-base sm:text-lg font-medium font-mono tracking-wider inline-block">
-                    {formatTime(when || plannedWhen || '')}
-                  </div>
-                  {Boolean(delay) && (
-                    <div
-                      className={`text-xs sm:text-sm font-mono mt-1 text-center flex items-center justify-center gap-1 ${delayClass}`}
-                    >
-                      <DelayIcon className="h-3.5 w-3.5" />
-                      <span>{formatDelay(delay)}</span>
-                    </div>
-                  )}
+                  <TimeDisplay 
+                    time={when || plannedWhen || ''} 
+                    variant="badge" 
+                  />
+                  <DelayDisplay 
+                    delay={delay || undefined} 
+                    className="mt-1 text-center justify-center line-clamp-1" 
+                    size="md" 
+                  />
                 </div>
               </div>
 
-              {remarks && remarks.length > 0 && (
-                <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                  {remarks.map((remark, i) => (
-                    <React.Fragment key={remark.text}>
-                      {i !== 0 && <span> | </span>}
-                      <span
-                        className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300"
-                        dangerouslySetInnerHTML={{ __html: remark.text }}
-                      />
-                    </React.Fragment>
-                  ))}
-                </div>
-              )}
+              <RemarksDisplay remarks={remarks} className="mt-1 sm:mt-2" />
             </div>
           </div>
         </CardContent>

@@ -4,8 +4,9 @@ import { Clock, Users } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import TripStopovers from "@/components/trip-stopovers"
-import { getProductColor, formatTime } from "@/lib/utils"
+import { formatTime } from "@/lib/utils"
 import { BackButton } from "@/components/back-button"
+import LineBadge from "@/components/line-badge"
 
 export default async function TripPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -43,12 +44,7 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
           <BackButton />
 
           <div className="flex items-center gap-3">
-            <div
-              className={`flex items-center justify-center w-12 h-12 text-white font-bold text-lg rounded-full overflow-hidden ${getProductColor(line.product)}`}
-              style={{ minWidth: "3rem", minHeight: "3rem" }}
-            >
-              <span className="text-center truncate px-1">{line.name}</span>
-            </div>
+            <LineBadge line={line} size="md" />
             <div>
               <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 line-clamp-2">
                 {line.name} to {direction}
@@ -83,17 +79,17 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
 
           {/* Trip summary */}
           <div className="mt-4 pt-4 border-t border-bvg-yellow/30">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0">
+              <div className="flex-[2]">
                 <div className="text-sm opacity-80">Departure</div>
                 <div className="text-lg font-mono">{formatTime(departureTime)}</div>
                 <div className="text-sm">{origin.stop.name}</div>
               </div>
-              <div className="flex flex-col items-center">
-                <Clock className="h-4 w-4 mb-1" />
+              <div className="flex sm:flex-col items-center flex-1 gap-1">
+                <Clock className="h-4 w-4" />
                 <div className="text-sm font-medium">{durationMinutes} min</div>
               </div>
-              <div className="text-right">
+              <div className="text-left sm:text-right flex-[2]">
                 <div className="text-sm opacity-80">Arrival</div>
                 <div className="text-lg font-mono">{formatTime(arrivalTime)}</div>
                 <div className="text-sm">{destination.stop.name}</div>

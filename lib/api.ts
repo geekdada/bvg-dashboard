@@ -69,6 +69,7 @@ export async function searchStops(query: string): Promise<SearchResponse[]> {
   url.searchParams.set('poi', 'false')
   url.searchParams.set('results', BVG_CONFIG.searchMaxResults.toString())
   url.searchParams.set('fuzzy', 'true')
+  url.searchParams.set('pretty', 'false')
 
   try {
     const response = await fetch(url.toString())
@@ -94,7 +95,7 @@ export async function fetchTripDetails(tripId: string): Promise<TripResponse> {
   url.searchParams.set('remarks', 'true')
   url.searchParams.set('polyline', 'false')
   url.searchParams.set('language', 'en')
-  url.searchParams.set('pretty', 'true')
+  url.searchParams.set('pretty', 'false')
 
   try {
     const response = await fetch(url.toString())
