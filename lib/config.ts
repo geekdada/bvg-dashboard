@@ -53,6 +53,7 @@ export const TRANSPORT_PRODUCTS: Record<TransportProduct, {
 export const POPULAR_STOPS = [
   { id: "900260009", name: "Flughafen BER" },
   { id: "900100009", name: "U Naturkundemuseum" },
+  { id: "900100501", name: "U Schwartzkopffstr." },
   { id: "900100023", name: "U Rosenthaler Platz" },
   { id: "900003201", name: "S+U Berlin Hauptbahnhof" },
 ] as const
