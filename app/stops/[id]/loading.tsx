@@ -7,9 +7,13 @@ import Link from "next/link"
 export default function Loading() {
   return (
     <div className="container mx-auto py-4 px-3 sm:py-6 sm:px-4 max-w-3xl">
-      <div className="mb-4 sm:mb-6">
+      <div className="bg-black text-bvg-yellow p-4 mb-4 sm:mb-6 rounded-md">
         <Link href="/">
-          <Button variant="ghost" size="sm" className="flex items-center gap-2 mb-2 sm:mb-4 -ml-2 h-8">
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2 mb-2 sm:mb-4 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
+          >
             <ArrowLeft className="h-4 w-4" />
             <span className="text-sm">Back</span>
           </Button>
@@ -17,8 +21,8 @@ export default function Loading() {
 
         {/* Stop Header Skeleton */}
         <div>
-          <Skeleton className="h-7 sm:h-8 w-3/4 mb-1 sm:mb-2" />
-          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-7 sm:h-8 w-3/4 mb-1 sm:mb-2 bg-gray-700" />
+          <Skeleton className="h-4 w-1/2 bg-gray-700" />
         </div>
       </div>
 

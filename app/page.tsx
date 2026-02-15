@@ -61,12 +61,12 @@ export default function Home() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 divide-y divide-gray-200 dark:divide-gray-700 sm:divide-x sm:divide-y">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px p-px bg-gray-200 dark:bg-gray-700">
             {POPULAR_STOPS.map((stop) => (
               <Link
                 key={stop.id}
                 href={`/stops/${stop.id}`}
-                className={`block p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
+                className="block p-4 bg-white dark:bg-black hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <h3 className="font-medium text-sm sm:text-base">{stop.name}</h3>
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">ID: {stop.id}</p>
