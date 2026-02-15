@@ -1,9 +1,4 @@
-import type { 
-  DeparturesResponse, 
-  SearchResponse, 
-  TripResponse, 
-  APIError 
-} from './types'
+import type { DeparturesResponse, SearchResponse, TripResponse } from './types'
 import { BVG_CONFIG } from './config'
 
 class BVGAPIError extends Error {
@@ -20,28 +15,26 @@ class BVGAPIError extends Error {
 async function handleAPIResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const errorText = await response.text().catch(() => 'Unknown error')
-    throw new BVGAPIError(
-      `API request failed: ${errorText}`,
-      response.status
-    )
+    throw new BVGAPIError(`API request failed: ${errorText}`, response.status)
   }
 
   try {
     return await response.json()
   } catch (error) {
-    throw new BVGAPIError(
-      'Failed to parse API response',
-      response.status
-    )
+    throw new BVGAPIError('Failed to parse API response', response.status)
   }
 }
 
-export async function fetchDepartures(stopId: string): Promise<DeparturesResponse> {
+export async function fetchDepartures(
+  stopId: string
+): Promise<DeparturesResponse> {
   if (!stopId?.trim()) {
     throw new BVGAPIError('Stop ID is required', 400)
   }
 
-  const url = new URL(`${BVG_CONFIG.apiBaseUrl}/stops/${encodeURIComponent(stopId)}/departures`)
+  const url = new URL(
+    `${BVG_CONFIG.apiBaseUrl}/stops/${encodeURIComponent(stopId)}/departures`
+  )
   url.searchParams.set('duration', BVG_CONFIG.defaultDuration.toString())
 
   try {
@@ -51,10 +44,7 @@ export async function fetchDepartures(stopId: string): Promise<DeparturesRespons
     if (error instanceof BVGAPIError) {
       throw error
     }
-    throw new BVGAPIError(
-      'Network error while fetching departures',
-      0
-    )
+    throw new BVGAPIError('Network error while fetching departures', 0)
   }
 }
 
@@ -78,10 +68,31 @@ export async function searchStops(query: string): Promise<SearchResponse[]> {
     if (error instanceof BVGAPIError) {
       throw error
     }
-    throw new BVGAPIError(
-      'Network error while searching stops',
-      0
-    )
+    throw new BVGAPIError('Network error while searching stops', 0)
+  }
+}
+
+export async function findNearbyStops(
+  latitude: number,
+  longitude: number,
+  limit: number = 3
+): Promise<SearchResponse[]> {
+  const url = new URL(`${BVG_CONFIG.apiBaseUrl}/locations/nearby`)
+  url.searchParams.set('latitude', latitude.toString())
+  url.searchParams.set('longitude', longitude.toString())
+  url.searchParams.set('results', limit.toString())
+  url.searchParams.set('stops', 'true')
+  url.searchParams.set('poi', 'false')
+  url.searchParams.set('pretty', 'false')
+
+  try {
+    const response = await fetch(url.toString())
+    return await handleAPIResponse<SearchResponse[]>(response)
+  } catch (error) {
+    if (error instanceof BVGAPIError) {
+      throw error
+    }
+    throw new BVGAPIError('Network error while finding nearby stops', 0)
   }
 }
 
@@ -90,7 +101,9 @@ export async function fetchTripDetails(tripId: string): Promise<TripResponse> {
     throw new BVGAPIError('Trip ID is required', 400)
   }
 
-  const url = new URL(`${BVG_CONFIG.apiBaseUrl}/trips/${encodeURIComponent(tripId)}`)
+  const url = new URL(
+    `${BVG_CONFIG.apiBaseUrl}/trips/${encodeURIComponent(tripId)}`
+  )
   url.searchParams.set('stopovers', 'true')
   url.searchParams.set('remarks', 'true')
   url.searchParams.set('polyline', 'false')
@@ -104,10 +117,7 @@ export async function fetchTripDetails(tripId: string): Promise<TripResponse> {
     if (error instanceof BVGAPIError) {
       throw error
     }
-    throw new BVGAPIError(
-      'Network error while fetching trip details',
-      0
-    )
+    throw new BVGAPIError('Network error while fetching trip details', 0)
   }
 }
 

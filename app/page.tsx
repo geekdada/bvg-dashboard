@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import StopSearch from "@/components/stop-search"
+import NearbyStops from "@/components/nearby-stops"
 import { POPULAR_STOPS } from "@/lib/config"
 
 export default function Home() {
@@ -17,6 +18,8 @@ export default function Home() {
       </div>
 
       <StopSearch />
+
+      <NearbyStops />
 
       <Card className="border-none shadow-md bvg-card mb-6">
         <CardHeader className="pb-2 sm:pb-4 bg-black text-bvg-yellow">
