@@ -2,14 +2,26 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useGeolocation } from '@/hooks/use-geolocation'
 import { findNearbyStops } from '@/lib/api'
 import type { SearchResponse } from '@/lib/types'
 
 export default function NearbyStops() {
-  const { latitude, longitude, error, isLoading: geoLoading, requestLocation } = useGeolocation()
+  const {
+    latitude,
+    longitude,
+    error,
+    isLoading: geoLoading,
+    requestLocation,
+  } = useGeolocation()
   const [stops, setStops] = useState<SearchResponse[]>([])
   const [stopsLoading, setStopsLoading] = useState(false)
   const [stopsError, setStopsError] = useState<string | null>(null)
@@ -40,47 +52,65 @@ export default function NearbyStops() {
   const isLoading = geoLoading || stopsLoading
 
   return (
-    <Card className="border-none shadow-md bvg-card mb-6">
-      <CardHeader className="pb-2 sm:pb-4 bg-black text-bvg-yellow">
-        <CardTitle className="text-lg sm:text-xl">Nearby Stops</CardTitle>
-        <CardDescription className="text-xs sm:text-sm text-gray-300">
+    <Card className="bvg-card mb-6 overflow-hidden">
+      <CardHeader className="bvg-card-header">
+        <CardTitle className="text-base sm:text-lg">Nearby Stops</CardTitle>
+        <CardDescription className="text-xs text-gray-300">
           Find stops closest to your current location
         </CardDescription>
       </CardHeader>
       <CardContent className="p-0">
         {stops.length > 0 ? (
-          <div className="divide-y divide-gray-200 dark:divide-gray-700">
+          <div className="divide-y divide-black dark:divide-bvg-yellow">
             {stops.map((stop) => (
               <Link
                 key={stop.id}
                 href={`/stops/${stop.id}`}
-                className="block p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="block bvg-row"
               >
-                <h3 className="font-medium text-sm sm:text-base">{stop.name}</h3>
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">ID: {stop.id}</p>
+                <h3 className="font-medium bvg-text">{stop.name}</h3>
+                <p className="text-sm bvg-text-muted mt-1">{stop.id}</p>
               </Link>
             ))}
           </div>
         ) : (
-          <div className="text-center py-4">
+          <div className="text-center py-6">
             {isLoading ? (
-              <p className="text-sm text-gray-500 dark:text-gray-400">Finding nearby stops...</p>
+              <p className="bvg-text-secondary">Finding nearby stops...</p>
             ) : error ? (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <p className="text-sm text-red-500">{error}</p>
-                <Button onClick={handleRequestLocation} variant="outline" size="sm">
+                <Button
+                  onClick={handleRequestLocation}
+                  variant="outline"
+                  size="sm"
+                  className="bvg-btn-outline"
+                >
                   Try Again
                 </Button>
               </div>
             ) : stopsError ? (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <p className="text-sm text-red-500">{stopsError}</p>
-                <Button onClick={() => latitude && longitude && fetchNearbyStops(latitude, longitude)} variant="outline" size="sm">
+                <Button
+                  onClick={() =>
+                    latitude &&
+                    longitude &&
+                    fetchNearbyStops(latitude, longitude)
+                  }
+                  variant="outline"
+                  size="sm"
+                  className="bvg-btn-outline"
+                >
                   Try Again
                 </Button>
               </div>
             ) : (
-              <Button onClick={handleRequestLocation} variant="outline" className="border-bvg-yellow text-black hover:bg-bvg-yellow">
+              <Button
+                onClick={handleRequestLocation}
+                variant="outline"
+                className="bvg-btn-outline"
+              >
                 Request Location
               </Button>
             )}

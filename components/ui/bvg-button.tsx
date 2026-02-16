@@ -6,15 +6,15 @@ interface BVGButtonProps extends Omit<ButtonProps, 'variant'> {
   variant?: 'primary' | 'secondary'
 }
 
-export function BVGButton({ 
-  className, 
-  variant = 'primary', 
+export function BVGButton({
+  className,
+  variant = 'primary',
   size = 'sm',
-  ...props 
+  ...props
 }: BVGButtonProps) {
   const variantClasses = {
     primary: CSS_CLASSES.button.primary,
-    secondary: 'bg-bvg-yellow text-black hover:bg-yellow-400',
+    secondary: 'bg-bvg-yellow text-black hover:bg-yellow-400 border-black dark:border-bvg-yellow',
   }
 
   return (
@@ -22,7 +22,7 @@ export function BVGButton({
       variant="outline"
       size={size}
       className={cn(
-        'h-8 text-xs sm:text-sm px-2 sm:px-3',
+        'h-8 text-xs sm:text-sm font-medium',
         variantClasses[variant],
         className
       )}

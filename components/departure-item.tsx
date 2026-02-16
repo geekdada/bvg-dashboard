@@ -19,39 +19,39 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
   const destinationText = direction || departure.destination?.name || "Unknown destination"
 
   return (
-    <Link href={`/trips/${tripId}`} className="block hover:opacity-95 transition-opacity">
-      <Card className="border-none shadow-md bvg-card overflow-hidden">
+    <Link href={`/trips/${tripId}`} className="block">
+      <Card className="bvg-card overflow-hidden hover:border-bvg-yellow transition-colors">
         <CardContent className="p-0">
           <div className="flex items-stretch">
+            {/* Line Badge */}
             <div
-              className={`flex items-center justify-center w-14 sm:w-16 text-white font-bold text-sm sm:text-base text-center ${productColor}`}
+              className={`flex items-center justify-center w-16 sm:w-20 text-white font-bold text-sm sm:text-lg text-center rounded-l-2xl ${productColor}`}
             >
               {line.name}
             </div>
 
-            <div className="flex-1 min-w-0 p-3 sm:p-4">
-              <div className="flex justify-between items-start">
+            {/* Content */}
+            <div className="flex-1 min-w-0 p-4 sm:p-5">
+              <div className="flex justify-between items-start gap-2">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-medium text-sm sm:text-base line-clamp-1">{destinationText}</h3>
-                  </div>
+                  <h3 className="font-medium line-clamp-1 bvg-text">{destinationText}</h3>
                   <PlatformBadge platform={platform || undefined} className="mt-1" />
                 </div>
 
-                <div className="text-right flex-shrink-0 ml-1">
-                  <TimeDisplay 
-                    time={when || plannedWhen || ''} 
-                    variant="badge" 
+                <div className="text-right flex-shrink-0">
+                  <TimeDisplay
+                    time={when || plannedWhen || ''}
+                    variant="badge"
                   />
-                  <DelayDisplay 
-                    delay={delay || undefined} 
-                    className="mt-1 text-center justify-center line-clamp-1" 
-                    size="md" 
+                  <DelayDisplay
+                    delay={delay || undefined}
+                    className="mt-1 text-center justify-center"
+                    size="md"
                   />
                 </div>
               </div>
 
-              <RemarksDisplay remarks={remarks} className="mt-1 sm:mt-2" />
+              <RemarksDisplay remarks={remarks} className="mt-2" />
             </div>
           </div>
         </CardContent>

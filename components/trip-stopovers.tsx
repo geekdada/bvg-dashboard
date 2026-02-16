@@ -9,7 +9,7 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
   const now = new Date()
 
   return (
-    <div className="space-y-1 relative">
+    <div className="space-y-0 relative">
       {stopovers.map((stopover, index) => {
         const isFirst = index === 0
         const isLast = index === stopovers.length - 1
@@ -22,28 +22,31 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
 
         return (
           <div key={`${stopover.stop.id}-${index}`} className="relative">
-            <div
-              className={`absolute left-3 top-0 h-full w-0.5 ${isPast ? "bg-gray-300" : "bg-black dark:bg-bvg-yellow"}`}
-            ></div>
+            {/* Timeline line */}
+            {!isLast && (
+              <div
+                className={`absolute left-3 top-6 h-full w-0.5 ${isPast ? "bg-gray-300 dark:bg-gray-700" : "bg-black dark:bg-bvg-yellow"}`}
+              />
+            )}
 
-            <div className="flex items-start gap-4 py-2">
+            <div className="flex items-start gap-4 py-3">
               {/* Timeline dot */}
               <div
-                className={`relative z-10 mt-1 w-6 h-6 rounded-full flex items-center justify-center 
-                ${isCurrent ? "bg-bvg-yellow text-black" : isPast ? "bg-gray-300 text-gray-600" : "bg-black text-bvg-yellow dark:bg-bvg-yellow dark:text-black"}`}
+                className={`relative z-10 mt-0.5 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
+                ${isCurrent ? "bg-bvg-yellow text-black" : isPast ? "bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400" : "bg-black text-bvg-yellow dark:bg-bvg-yellow dark:text-black"}`}
               >
                 {isFirst ? "S" : isLast ? "E" : "•"}
               </div>
 
-              <div className="flex-1">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className={`font-medium ${isPast ? "text-gray-500" : ""}`}>{stopover.stop.name}</h3>
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-start gap-2">
+                  <div className="min-w-0">
+                    <h3 className={`font-medium truncate bvg-text ${isPast ? "bvg-text-muted" : ""}`}>{stopover.stop.name}</h3>
 
                     {/* Platform info */}
                     {(stopover.arrivalPlatform || stopover.departurePlatform) && (
-                      <div className="text-xs text-gray-600 dark:text-gray-400">
-                        Platform: {stopover.departurePlatform || stopover.arrivalPlatform}
+                      <div className="text-sm bvg-text-muted">
+                        Platform {stopover.departurePlatform || stopover.arrivalPlatform}
                       </div>
                     )}
 
@@ -52,12 +55,12 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                       <div className="flex items-center mt-1">
                         <Badge
                           variant="outline"
-                          className={`border-none text-xs flex items-center gap-1 ${
+                          className={`text-xs flex items-center gap-1 ${
                             stopover.occupancy === "high"
-                              ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                              ? "bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 border-red-300 dark:border-red-700"
                               : stopover.occupancy === "medium"
-                                ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-                                : "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                                ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300 border-yellow-300 dark:border-yellow-700"
+                                : "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 border-green-300 dark:border-green-700"
                           }`}
                         >
                           <Users className="h-3 w-3" />
@@ -67,19 +70,16 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                     )}
                   </div>
 
-                  <div className="text-right">
-                    {/* Show departure time if available, otherwise show arrival time for the last stop */}
+                  <div className="text-right flex-shrink-0">
                     {(stopover.departure || (isLast && stopover.arrival)) && (
                       <div className="flex flex-col items-end">
-                        <TimeDisplay 
+                        <TimeDisplay
                           time={stopover.departure || stopover.arrival}
-                          className={isPast ? "text-gray-500" : ""}
+                          className={isPast ? "bvg-text-muted" : ""}
                         />
-
-                        {/* Show delay if available */}
-                        <DelayDisplay 
+                        <DelayDisplay
                           delay={stopover.departureDelay || stopover.arrivalDelay}
-                          className="mt-1"
+                          className="mt-0.5"
                           size="sm"
                         />
                       </div>
@@ -89,19 +89,19 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
 
                 {/* Current indicator */}
                 {isCurrent && (
-                  <div className="mt-1 text-xs bg-bvg-yellow text-black px-2 py-0.5 rounded inline-block">
-                    Currently at this stop
+                  <div className="mt-2 text-xs bg-bvg-yellow text-black px-2 py-1 rounded font-medium inline-block">
+                    Currently here
                   </div>
                 )}
 
                 {/* Remarks */}
                 {stopover.remarks && stopover.remarks.length > 0 && (
-                  <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  <div className="mt-2 text-sm bvg-text-muted">
                     {stopover.remarks.map((remark: any, i: number) => (
                       <React.Fragment key={i}>
                         {i !== 0 && <span> | </span>}
                         <span
-                          className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300"
+                          className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline"
                           dangerouslySetInnerHTML={{ __html: remark.text || remark.summary || "" }}
                         />
                       </React.Fragment>

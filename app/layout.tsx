@@ -25,6 +25,11 @@ export default function RootLayout({
       <body className={`${roboto.className} bg-bvg-yellow dark:bg-black`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <main className="min-h-screen">{children}</main>
+          <footer className="py-6 text-center">
+            <p className="text-xs text-black/50 dark:text-bvg-yellow/50 font-medium tracking-wide">
+              #weilwirdichlieben
+            </p>
+          </footer>
         </ThemeProvider>
       </body>
     </html>

@@ -66,14 +66,14 @@ export const DELAY_THRESHOLDS = {
 
 export const CSS_CLASSES = {
   delay: {
-    onTime: 'text-green-600',
-    minor: 'text-yellow-600',
-    major: 'text-red-600',
+    onTime: 'text-green-600 dark:text-green-400',
+    minor: 'text-yellow-600 dark:text-yellow-400',
+    major: 'text-red-600 dark:text-red-400',
   },
   button: {
-    primary: 'bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black',
+    primary: 'bvg-btn-outline',
   },
   card: {
-    bvg: 'border-none shadow-md bvg-card',
+    bvg: 'bvg-card',
   }
 } as const

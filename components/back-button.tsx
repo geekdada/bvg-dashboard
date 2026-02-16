@@ -12,10 +12,10 @@ export function BackButton() {
       variant="outline"
       size="sm"
       onClick={() => router.back()}
-      className="flex items-center gap-2 mb-2 sm:mb-4 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
+      className="bvg-btn-outline mb-4"
     >
-      <ArrowLeft className="h-4 w-4" />
-      <span className="text-sm">Back</span>
+      <ArrowLeft className="h-4 w-4 mr-2" />
+      Back
     </Button>
   )
 }

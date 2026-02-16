@@ -27,39 +27,43 @@ export default async function StopPage({ params }: { params: Promise<{ id: strin
     }
 
     return (
-      <div className="container mx-auto py-4 px-3 sm:py-6 sm:px-4 max-w-3xl">
-        <div className="bg-black text-bvg-yellow p-4 mb-4 sm:mb-6 rounded-md">
-          <Link href="/">
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2 mb-2 sm:mb-4 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="text-sm">Back</span>
-            </Button>
-          </Link>
+      <div className="container mx-auto py-4 px-4 max-w-3xl">
+        {/* Header */}
+        <div className="bvg-card p-4 mb-6">
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="bvg-btn-outline mb-4"
+          >
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Link>
+          </Button>
           <StopHeader stop={stopInfo} />
         </div>
+
         <DepartureList departures={data.departures || []} stopLocation={stopInfo.location} stopName={stopInfo.name} />
       </div>
     )
   } catch (error) {
     console.error("Error fetching data:", error)
     return (
-      <div className="container mx-auto py-4 px-3 sm:py-6 sm:px-4 max-w-3xl">
-        <div className="bg-black text-bvg-yellow p-4 mb-4 sm:mb-6 rounded-md">
-          <Link href="/">
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2 mb-2 sm:mb-4 h-8 bg-transparent text-bvg-yellow border-bvg-yellow hover:bg-bvg-yellow hover:text-black"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="text-sm">Back</span>
-            </Button>
-          </Link>
-          <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Error Loading Departures</h1>
+      <div className="container mx-auto py-4 px-4 max-w-3xl">
+        <div className="bvg-card p-4 mb-6">
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="bvg-btn-outline mb-4"
+          >
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <h1 className="text-xl font-bold text-red-500">Error Loading Departures</h1>
         </div>
         <p className="text-red-500">
           Could not load departures for stop ID: {stopId}. Please check if the stop ID is correct.

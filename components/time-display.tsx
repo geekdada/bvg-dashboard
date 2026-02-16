@@ -10,10 +10,10 @@ export default function TimeDisplay({ time, className = "", variant = "default" 
   if (!time) return null
 
   const baseClasses = "font-mono"
-  
+
   const variantClasses = {
-    default: "text-sm",
-    badge: "bg-black text-bvg-yellow px-2 py-1 rounded-sm text-base sm:text-lg font-medium tracking-wider inline-block"
+    default: "text-sm bvg-text",
+    badge: "bg-black text-bvg-yellow dark:bg-bvg-yellow dark:text-black px-2 py-1 rounded text-base font-medium inline-block"
   }
 
   return (
