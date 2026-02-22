@@ -55,6 +55,10 @@ export interface Trip {
   stopovers?: Stopover[]
   occupancy?: 'low' | 'medium' | 'high'
   remarks?: Remark[]
+  polyline?: {
+    type: 'FeatureCollection'
+    features: any[]
+  }
 }
 
 export interface Departure {

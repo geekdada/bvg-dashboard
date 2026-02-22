@@ -4,10 +4,11 @@ import { Clock, Users } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import TripStopovers from '@/components/trip-stopovers'
-import { formatTime } from '@/lib/utils'
+import { formatTime, getProductHexColor } from '@/lib/utils'
 import { BackButton } from '@/components/back-button'
 import LineBadge from '@/components/line-badge'
 import RemarksDisplay from '@/components/remarks-display'
+import TripMap from '@/components/trip-map'
 
 export default async function TripPage({
   params,
@@ -25,7 +26,7 @@ export default async function TripPage({
     const tripData = await fetchTripDetails(tripId)
 
     // Extract data from the response
-    const { line, direction, stopovers, occupancy, remarks } =
+    const { line, direction, stopovers, occupancy, remarks, polyline } =
       tripData.trip || tripData
 
     if (!stopovers || stopovers.length === 0) {
@@ -95,7 +96,9 @@ export default async function TripPage({
           <div className="mt-6 pt-5 border-t border-border/60">
             <div className="flex justify-between items-start">
               <div className="flex-1">
-                <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Departure</div>
+                <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                  Departure
+                </div>
                 <div className="text-xl font-mono font-medium text-foreground">
                   {formatTime(departureTime)}
                 </div>
@@ -110,7 +113,9 @@ export default async function TripPage({
                 </div>
               </div>
               <div className="flex-1 text-right">
-                <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Arrival</div>
+                <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                  Arrival
+                </div>
                 <div className="text-xl font-mono font-medium text-foreground">
                   {formatTime(arrivalTime)}
                 </div>
@@ -120,6 +125,15 @@ export default async function TripPage({
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Trip Route Map */}
+        <div className="mb-6">
+          <TripMap
+            stopovers={stopovers}
+            polyline={polyline}
+            lineColor={getProductHexColor(line.product)}
+          />
         </div>
 
         {/* Trip Route */}

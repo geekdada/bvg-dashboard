@@ -1,6 +1,6 @@
-import { clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-import type { ClassValue } from "clsx"
+import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+import type { ClassValue } from 'clsx'
 import type { TransportProduct, Location } from './types'
 import { TRANSPORT_PRODUCTS, DELAY_THRESHOLDS, CSS_CLASSES } from './config'
 
@@ -11,14 +11,14 @@ export function cn(...inputs: ClassValue[]) {
 // Time formatting utilities
 export function formatTime(dateString: string): string {
   if (!dateString) return '--:--'
-  
+
   try {
     const date = new Date(dateString)
     if (isNaN(date.getTime())) return '--:--'
-    
-    return date.toLocaleTimeString("de-DE", {
-      hour: "2-digit",
-      minute: "2-digit",
+
+    return date.toLocaleTimeString('de-DE', {
+      hour: '2-digit',
+      minute: '2-digit',
     })
   } catch (error) {
     return '--:--'
@@ -26,23 +26,23 @@ export function formatTime(dateString: string): string {
 }
 
 export function formatDelay(seconds: number | null | undefined): string {
-  if (!seconds || seconds === 0) return ""
+  if (!seconds || seconds === 0) return ''
 
   const minutes = Math.floor(Math.abs(seconds) / 60)
-  const sign = seconds > 0 ? "+" : "-"
+  const sign = seconds > 0 ? '+' : '-'
 
   return `${sign}${minutes} min`
 }
 
 export function getRelativeTime(dateString: string): string {
   if (!dateString) return ''
-  
+
   try {
     const date = new Date(dateString)
     const now = new Date()
     const diffMs = date.getTime() - now.getTime()
     const diffMinutes = Math.round(diffMs / 60000)
-    
+
     if (diffMinutes < 1) return 'now'
     if (diffMinutes === 1) return '1 min'
     return `${diffMinutes} min`
@@ -56,14 +56,21 @@ export function getProductIcon(product: TransportProduct | string): string {
   if (product in TRANSPORT_PRODUCTS) {
     return TRANSPORT_PRODUCTS[product as TransportProduct].icon
   }
-  return "?"
+  return '?'
 }
 
 export function getProductColor(product: TransportProduct | string): string {
   if (product in TRANSPORT_PRODUCTS) {
     return TRANSPORT_PRODUCTS[product as TransportProduct].color
   }
-  return "bg-gray-600"
+  return 'bg-gray-600'
+}
+
+export function getProductHexColor(product: TransportProduct | string): string {
+  if (product in TRANSPORT_PRODUCTS) {
+    return TRANSPORT_PRODUCTS[product as TransportProduct].hexColor
+  }
+  return '#333333'
 }
 
 export function getProductName(product: TransportProduct | string): string {
@@ -75,8 +82,8 @@ export function getProductName(product: TransportProduct | string): string {
 
 // Delay utilities
 export function getDelayClass(delay: number | null | undefined): string {
-  if (!delay) return ""
-  
+  if (!delay) return ''
+
   if (delay <= DELAY_THRESHOLDS.ON_TIME) {
     return CSS_CLASSES.delay.onTime
   }
@@ -86,7 +93,9 @@ export function getDelayClass(delay: number | null | undefined): string {
   return CSS_CLASSES.delay.major
 }
 
-export function getDelayStatus(delay: number | null | undefined): 'on-time' | 'minor' | 'major' {
+export function getDelayStatus(
+  delay: number | null | undefined
+): 'on-time' | 'minor' | 'major' {
   if (!delay || delay <= DELAY_THRESHOLDS.ON_TIME) return 'on-time'
   if (delay <= DELAY_THRESHOLDS.MINOR_DELAY) return 'minor'
   return 'major'
@@ -100,11 +109,11 @@ export function formatCoordinates(location: Location): string {
 
 export function getGoogleMapsUrl(location: Location, name?: string): string {
   if (!location?.latitude || !location?.longitude) return ''
-  
-  const query = name 
-    ? encodeURIComponent(name) 
+
+  const query = name
+    ? encodeURIComponent(name)
     : `${location.latitude},${location.longitude}`
-    
+
   return `https://www.google.com/maps/search/?api=1&query=${query}`
 }
 
@@ -114,7 +123,7 @@ export function isValidStopId(stopId: string): boolean {
 }
 
 export function isValidTripId(tripId: string): boolean {
-  return !!(tripId?.trim())
+  return !!tripId?.trim()
 }
 
 // String utilities

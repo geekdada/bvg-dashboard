@@ -12,41 +12,49 @@ export const TRANSPORT_PRODUCTS: Record<TransportProduct, {
   icon: string
   name: string
   color: string
+  hexColor: string
 }> = {
   suburban: {
     icon: 'S',
     name: 'S-Bahn',
-    color: 'bg-transport-suburban'
+    color: 'bg-transport-suburban',
+    hexColor: '#006F35'
   },
   subway: {
     icon: 'U',
     name: 'U-Bahn',
-    color: 'bg-transport-subway'
+    color: 'bg-transport-subway',
+    hexColor: '#0066B3'
   },
   tram: {
     icon: 'T',
     name: 'Tram',
-    color: 'bg-transport-tram'
+    color: 'bg-transport-tram',
+    hexColor: '#DC0000'
   },
   bus: {
     icon: 'B',
     name: 'Bus',
-    color: 'bg-transport-bus'
+    color: 'bg-transport-bus',
+    hexColor: '#8C4799'
   },
   ferry: {
     icon: 'F',
     name: 'Ferry',
-    color: 'bg-transport-ferry'
+    color: 'bg-transport-ferry',
+    hexColor: '#00A1DE'
   },
   express: {
     icon: 'E',
     name: 'Express',
-    color: 'bg-transport-express'
+    color: 'bg-transport-express',
+    hexColor: '#F18700'
   },
   regional: {
     icon: 'R',
     name: 'Regional',
-    color: 'bg-transport-regional'
+    color: 'bg-transport-regional',
+    hexColor: '#DB0066'
   }
 }
 

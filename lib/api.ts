@@ -106,7 +106,7 @@ export async function fetchTripDetails(tripId: string): Promise<TripResponse> {
   )
   url.searchParams.set('stopovers', 'true')
   url.searchParams.set('remarks', 'true')
-  url.searchParams.set('polyline', 'false')
+  url.searchParams.set('polyline', 'true')
   url.searchParams.set('language', 'en')
   url.searchParams.set('pretty', 'false')
 
