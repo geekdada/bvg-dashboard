@@ -3,6 +3,7 @@ import { Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import TimeDisplay from "@/components/time-display"
 import DelayDisplay from "@/components/delay-display"
+import RemarksDisplay from "@/components/remarks-display"
 
 
 export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
@@ -96,17 +97,7 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
 
                 {/* Remarks */}
                 {stopover.remarks && stopover.remarks.length > 0 && (
-                  <div className="mt-2 text-sm bvg-text-muted">
-                    {stopover.remarks.map((remark: any, i: number) => (
-                      <React.Fragment key={i}>
-                        {i !== 0 && <span> | </span>}
-                        <span
-                          className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline"
-                          dangerouslySetInnerHTML={{ __html: remark.text || remark.summary || "" }}
-                        />
-                      </React.Fragment>
-                    ))}
-                  </div>
+                  <RemarksDisplay remarks={stopover.remarks} className="mt-2" />
                 )}
               </div>
             </div>

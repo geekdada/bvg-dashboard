@@ -21,17 +21,19 @@ export default function Loading() {
 
         {/* Trip summary skeleton */}
         <div className="mt-4 pt-4 border-t border-bvg-yellow/30">
-          <div className="flex justify-between items-center">
-            <div>
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
               <Skeleton className="h-4 w-16 mb-1" />
               <Skeleton className="h-6 w-20 mb-1" />
-              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-4 w-32 max-w-[120px] sm:max-w-none" />
             </div>
-            <Skeleton className="h-10 w-16" />
-            <div>
+            <div className="flex flex-col items-center px-2">
+              <Skeleton className="h-10 w-16" />
+            </div>
+            <div className="flex-1 flex flex-col items-end text-right">
               <Skeleton className="h-4 w-16 mb-1" />
               <Skeleton className="h-6 w-20 mb-1" />
-              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-4 w-32 max-w-[120px] sm:max-w-none" />
             </div>
           </div>
         </div>

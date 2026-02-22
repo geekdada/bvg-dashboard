@@ -7,6 +7,7 @@ import TripStopovers from '@/components/trip-stopovers'
 import { formatTime } from '@/lib/utils'
 import { BackButton } from '@/components/back-button'
 import LineBadge from '@/components/line-badge'
+import RemarksDisplay from '@/components/remarks-display'
 
 export default async function TripPage({
   params,
@@ -93,7 +94,7 @@ export default async function TripPage({
           {/* Trip summary */}
           <div className="mt-4 pt-4 border-t border-border">
             <div className="flex justify-between items-start">
-              <div>
+              <div className="flex-1">
                 <div className="text-xs bvg-text-muted">Departure</div>
                 <div className="text-lg font-mono font-bold bvg-text">
                   {formatTime(departureTime)}
@@ -102,11 +103,13 @@ export default async function TripPage({
                   {origin.stop.name}
                 </div>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center px-2">
                 <Clock className="h-4 w-4 bvg-text-muted" />
-                <div className="text-sm font-bold bvg-text">{durationMinutes} min</div>
+                <div className="text-sm font-bold bvg-text">
+                  {durationMinutes} min
+                </div>
               </div>
-              <div className="text-right">
+              <div className="flex-1 text-right">
                 <div className="text-xs bvg-text-muted">Arrival</div>
                 <div className="text-lg font-mono font-bold bvg-text">
                   {formatTime(arrivalTime)}
@@ -136,18 +139,10 @@ export default async function TripPage({
               <CardTitle className="text-base">Remarks</CardTitle>
             </CardHeader>
             <CardContent className="p-4">
-              <ul className="space-y-2">
-                {remarks.map((remark: any, index: number) => (
-                  <li key={index} className="text-sm bvg-text-secondary">
-                    <span
-                      className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline"
-                      dangerouslySetInnerHTML={{
-                        __html: remark.text || remark.summary || remark,
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
+              <RemarksDisplay
+                remarks={remarks}
+                className="bg-transparent p-0"
+              />
             </CardContent>
           </Card>
         )}

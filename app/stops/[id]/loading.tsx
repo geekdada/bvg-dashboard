@@ -45,7 +45,7 @@ export default function Loading() {
             <Card key={i} className="bvg-card overflow-hidden">
               <CardContent className="p-0">
                 <div className="flex items-stretch">
-                  <Skeleton className="w-16 sm:w-20 rounded-l-2xl bg-gray-300 dark:bg-gray-700" />
+                  <Skeleton className="w-16 sm:w-20 bg-gray-300 dark:bg-gray-700" />
                   <div className="flex-1 p-4">
                     <div className="flex justify-between">
                       <div className="space-y-2">
