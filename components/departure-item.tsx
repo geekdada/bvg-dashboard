@@ -29,47 +29,47 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
     direction || departure.destination?.name || 'Unknown destination'
 
   return (
-    <Link href={`/trips/${tripId}`} className="block">
-      <Card className="bvg-card overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-        <CardContent className="p-0">
-          <div className="flex items-stretch">
-            {/* Line Badge */}
+    <Link href={`/trips/${tripId}`} className="block group">
+      <Card className="bvg-card p-4 sm:p-5 hover:bg-muted/10 transition-colors duration-200 border-border/50 hover:border-border/60">
+        <div className="flex items-start gap-4">
+          {/* Line Badge wrapper for fixed width */}
+          <div className="flex-shrink-0 w-12 sm:w-14">
             <div
-              className={`flex items-center justify-center w-16 sm:w-20 text-white font-bold text-sm sm:text-lg text-center ${productColor}`}
+              className={`flex items-center justify-center w-full px-1 py-1.5 rounded-md text-white font-semibold text-sm text-center shadow-sm ${productColor}`}
             >
-              {line.name}
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 min-w-0 p-4 sm:p-5">
-              <div className="flex justify-between items-start gap-2">
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-medium line-clamp-1 bvg-text">
-                    {destinationText}
-                  </h3>
-                  <PlatformBadge
-                    platform={platform || undefined}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div className="text-right flex-shrink-0">
-                  <TimeDisplay
-                    time={when || plannedWhen || ''}
-                    variant="badge"
-                  />
-                  <DelayDisplay
-                    delay={delay || undefined}
-                    className="mt-1 text-center justify-center"
-                    size="md"
-                  />
-                </div>
-              </div>
-
-              <RemarksDisplay remarks={remarks} className="mt-2" />
+              <span className="truncate">{line.name}</span>
             </div>
           </div>
-        </CardContent>
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <div className="flex justify-between items-start gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-medium line-clamp-1 text-foreground transition-colors">
+                  {destinationText}
+                </h3>
+                <PlatformBadge
+                  platform={platform || undefined}
+                  className="mt-1.5"
+                />
+              </div>
+
+              <div className="text-right flex-shrink-0 flex flex-col items-end">
+                <TimeDisplay
+                  time={when || plannedWhen || ''}
+                  variant="badge"
+                />
+                <DelayDisplay
+                  delay={delay || undefined}
+                  className="mt-2"
+                  size="md"
+                />
+              </div>
+            </div>
+
+            <RemarksDisplay remarks={remarks} className="mt-3" />
+          </div>
+        </div>
       </Card>
     </Link>
   )

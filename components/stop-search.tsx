@@ -26,7 +26,7 @@ export default function StopSearch() {
 
   const navigateToStop = useCallback((stopId: string) => {
     setIsSearching(false)
-    router.push(`/stops/${stopId}`)
+    router.push(`/stops/${stopId}`, { scroll: true })
   }, [router])
 
   const { selectedIndex, setSelectedIndex, handleKeyDown, resetSelection } = useKeyboardNavigation({
@@ -105,7 +105,7 @@ export default function StopSearch() {
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onKeyDown={handleKeyDown}
-          className="pl-10 bg-card border border-border focus-visible:ring-bvg-yellow bvg-text rounded-xl"
+          className="pl-10 bg-background/50 border border-border/60 focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary text-foreground rounded-lg h-11 shadow-sm transition-all"
           aria-label="Search for stops"
           aria-autocomplete="list"
           aria-controls={isSearching ? "search-results" : undefined}
@@ -113,41 +113,41 @@ export default function StopSearch() {
           role="combobox"
           aria-expanded={isSearching}
         />
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 bvg-text-muted" />
+        <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
       </div>
 
       {isSearching && (
-        <Card className="absolute z-10 w-full mt-2 bvg-card max-h-80 overflow-auto bvg-levitate">
-          <CardContent className="p-0">
+        <Card className="absolute z-10 w-full mt-2 bvg-card max-h-80 overflow-auto shadow-lg shadow-black/5 dark:shadow-black/40 border-border/60">
+          <CardContent className="p-0 flex flex-col">
             {isLoading ? (
-              <div className="p-4">
+              <div className="p-6">
                 <LoadingSpinner text="Searching..." />
               </div>
             ) : results.length > 0 ? (
-              <ul id="search-results" ref={resultsRef} className="divide-y divide-black dark:divide-bvg-yellow" role="listbox">
+              <ul id="search-results" ref={resultsRef} role="listbox">
                 {results.map((stop, index) => (
                   <li
                     key={stop.id}
                     id={`result-${index}`}
                     role="option"
                     aria-selected={selectedIndex === index}
-                    className={`${
-                      selectedIndex === index ? "bg-bvg-yellow text-black" : ""
-                    } cursor-pointer`}
+                    className={`bvg-row group ${
+                      selectedIndex === index ? "bg-muted/60" : ""
+                    }`}
                     onMouseEnter={() => setSelectedIndex(index)}
                     onClick={() => navigateToStop(stop.id)}
                   >
-                    <div className="block px-4 py-3 hover:bg-bvg-yellow hover:text-black transition-colors">
-                      <div className="font-medium bvg-text">{stop.name}</div>
-                      <div className="text-sm bvg-text-muted">{stop.id}</div>
+                    <div>
+                      <div className="text-sm font-medium text-foreground transition-colors">{stop.name}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5 font-mono">{stop.id}</div>
                     </div>
                   </li>
                 ))}
               </ul>
             ) : query.length >= BVG_CONFIG.searchMinLength ? (
-              <div className="p-4 text-center bvg-text-muted">No stops found</div>
+              <div className="p-6 text-center text-sm text-muted-foreground">No stops found</div>
             ) : (
-              <div className="p-4 text-center bvg-text-muted">
+              <div className="p-6 text-center text-sm text-muted-foreground">
                 Type at least {BVG_CONFIG.searchMinLength} characters to search
               </div>
             )}

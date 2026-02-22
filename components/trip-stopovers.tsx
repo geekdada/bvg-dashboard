@@ -26,42 +26,41 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
             {/* Timeline line */}
             {!isLast && (
               <div
-                className={`absolute left-3 top-6 h-full w-0.5 ${isPast ? "bg-gray-300 dark:bg-gray-700" : "bg-black dark:bg-bvg-yellow"}`}
+                className={`absolute left-[11px] top-8 bottom-[-8px] w-[2px] ${isPast ? "bg-muted" : "bg-primary/30"}`}
               />
             )}
 
             <div className="flex items-start gap-4 py-3">
               {/* Timeline dot */}
-              <div
-                className={`relative z-10 mt-0.5 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
-                ${isCurrent ? "bg-bvg-yellow text-black" : isPast ? "bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400" : "bg-black text-bvg-yellow dark:bg-bvg-yellow dark:text-black"}`}
-              >
-                {isFirst ? "S" : isLast ? "E" : "•"}
+              <div className="relative z-10 mt-1.5 flex h-6 w-6 items-center justify-center">
+                <div
+                  className={`rounded-full shadow-sm ring-4 ring-card transition-all ${isCurrent ? "bg-primary ring-primary/20 h-3 w-3" : isPast ? "bg-muted h-2.5 w-2.5" : "bg-primary h-2.5 w-2.5"}`}
+                />
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-start gap-2">
+                <div className="flex justify-between items-start gap-3">
                   <div className="min-w-0">
-                    <h3 className={`font-medium truncate bvg-text ${isPast ? "bvg-text-muted" : ""}`}>{stopover.stop.name}</h3>
+                    <h3 className={`font-medium truncate text-foreground transition-colors ${isPast ? "text-muted-foreground" : ""}`}>{stopover.stop.name}</h3>
 
                     {/* Platform info */}
                     {(stopover.arrivalPlatform || stopover.departurePlatform) && (
-                      <div className="text-sm bvg-text-muted">
+                      <div className="text-xs text-muted-foreground mt-0.5">
                         Platform {stopover.departurePlatform || stopover.arrivalPlatform}
                       </div>
                     )}
 
                     {/* Occupancy */}
                     {stopover.occupancy && (
-                      <div className="flex items-center mt-1">
+                      <div className="flex items-center mt-2">
                         <Badge
                           variant="outline"
-                          className={`text-xs flex items-center gap-1 ${
+                          className={`text-xs flex items-center gap-1.5 border-border bg-transparent ${
                             stopover.occupancy === "high"
-                              ? "bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 border-red-300 dark:border-red-700"
+                              ? "text-destructive"
                               : stopover.occupancy === "medium"
-                                ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300 border-yellow-300 dark:border-yellow-700"
-                                : "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 border-green-300 dark:border-green-700"
+                                ? "text-yellow-600 dark:text-yellow-400"
+                                : "text-green-600 dark:text-green-400"
                           }`}
                         >
                           <Users className="h-3 w-3" />
@@ -76,11 +75,11 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                       <div className="flex flex-col items-end">
                         <TimeDisplay
                           time={stopover.departure || stopover.arrival}
-                          className={isPast ? "bvg-text-muted" : ""}
+                          className={isPast ? "text-muted-foreground" : "text-foreground"}
                         />
                         <DelayDisplay
                           delay={stopover.departureDelay || stopover.arrivalDelay}
-                          className="mt-0.5"
+                          className="mt-1"
                           size="sm"
                         />
                       </div>
@@ -90,14 +89,14 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
 
                 {/* Current indicator */}
                 {isCurrent && (
-                  <div className="mt-2 text-xs bg-bvg-yellow text-black px-2 py-1 rounded font-medium inline-block">
+                  <div className="mt-2 text-[10px] uppercase tracking-wider bg-primary/10 text-primary px-2 py-1 rounded font-semibold inline-block">
                     Currently here
                   </div>
                 )}
 
                 {/* Remarks */}
                 {stopover.remarks && stopover.remarks.length > 0 && (
-                  <RemarksDisplay remarks={stopover.remarks} className="mt-2" />
+                  <RemarksDisplay remarks={stopover.remarks} className="mt-3" />
                 )}
               </div>
             </div>

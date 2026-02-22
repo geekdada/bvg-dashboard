@@ -27,14 +27,14 @@ export default async function StopPage({ params }: { params: Promise<{ id: strin
     }
 
     return (
-      <div className="container mx-auto py-4 px-4 max-w-3xl">
+      <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl animate-in fade-in duration-700 slide-in-from-bottom-4">
         {/* Header */}
-        <div className="bvg-card p-4 mb-6">
+        <div className="bvg-card p-5 mb-8">
           <Button
             variant="outline"
             size="sm"
             asChild
-            className="bvg-btn-outline mb-4"
+            className="bvg-btn-outline mb-6"
           >
             <Link href="/">
               <ArrowLeft className="h-4 w-4 mr-2" />

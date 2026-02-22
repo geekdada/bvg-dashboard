@@ -12,8 +12,8 @@ export default function TimeDisplay({ time, className = "", variant = "default" 
   const baseClasses = "font-mono"
 
   const variantClasses = {
-    default: "text-sm bvg-text",
-    badge: "bg-black text-bvg-yellow dark:bg-bvg-yellow dark:text-black px-2 py-1 rounded text-base font-medium inline-block"
+    default: "text-sm text-foreground",
+    badge: "bg-primary text-primary-foreground px-2 py-1 rounded-md text-sm font-medium inline-block tracking-wide shadow-sm"
   }
 
   return (

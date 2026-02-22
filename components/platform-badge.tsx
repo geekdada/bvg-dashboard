@@ -10,12 +10,12 @@ export default function PlatformBadge({ platform, variant = "bvg", className = "
   if (!platform) return null
 
   const variantClasses = {
-    default: "bg-gray-100 text-gray-800 border-gray-300",
-    bvg: "bg-black text-bvg-yellow dark:bg-bvg-yellow dark:text-black border-none"
+    default: "bg-muted text-muted-foreground border-transparent",
+    bvg: "bg-secondary text-secondary-foreground border-border"
   }
 
   return (
-    <Badge variant="outline" className={`text-xs ${variantClasses[variant]} ${className}`}>
+    <Badge variant="outline" className={`text-xs font-medium ${variantClasses[variant]} ${className}`}>
       Platform {platform}
     </Badge>
   )

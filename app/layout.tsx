@@ -1,10 +1,9 @@
 import type React from "react"
 import "./globals.css"
-import { Roboto } from "next/font/google"
+import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 
-const roboto = Roboto({
-  weight: ["400", "500", "700"],
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 })
@@ -22,14 +21,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${roboto.className} bg-bvg-yellow dark:bg-black`}>
+      <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main className="min-h-screen">{children}</main>
-          <footer className="py-6 text-center">
-            <p className="text-xs text-black/50 dark:text-bvg-yellow/50 font-medium tracking-wide">
-              #weilwirdichlieben
-            </p>
-          </footer>
+          <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-muted/20 via-background to-background">
+            <main className="min-h-screen">{children}</main>
+            <footer className="py-6 text-center border-t border-border/40 mt-12">
+              <p className="text-xs text-muted-foreground font-medium tracking-wide">
+                #weilwirdichlieben
+              </p>
+            </footer>
+          </div>
         </ThemeProvider>
       </body>
     </html>

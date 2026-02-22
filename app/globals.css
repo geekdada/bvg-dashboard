@@ -4,87 +4,65 @@
 
 @layer base {
   :root {
-    /* BVG Brand Colors */
-    --bvg-yellow: 54 100% 50%;
-    --bvg-black: 0 0% 0%;
+    /* Linear Style Light Mode */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 9%;
 
-    /* Background: Yellow (BVG brand) */
-    --background: 54 100% 50%;
-    --foreground: 0 0% 0%;
-
-    /* Cards: White */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 0 0% 9%;
 
-    /* Popovers */
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 0 0% 9%;
 
-    /* Primary: Yellow */
     --primary: 54 100% 50%;
-    --primary-foreground: 0 0% 0%;
+    --primary-foreground: 0 0% 9%;
 
-    /* Secondary: Black */
-    --secondary: 0 0% 0%;
-    --secondary-foreground: 54 100% 50%;
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 9%;
 
-    /* Muted: Light gray */
-    --muted: 0 0% 96%;
+    --muted: 0 0% 94%;
     --muted-foreground: 0 0% 45%;
 
-    /* Accent: Yellow on hover */
-    --accent: 54 100% 50%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 0 0% 92%;
+    --accent-foreground: 0 0% 9%;
 
-    /* Borders: Black */
-    --border: 0 0% 0%;
-    --input: 0 0% 0%;
-    --ring: 0 0% 0%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 9%;
 
-    /* Destructive */
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
+    --radius: 0.5rem;
 
-    --radius: 1rem;
+    /* BVG Brand Colors as references */
+    --bvg-yellow: 54 100% 50%;
+    --bvg-black: 0 0% 0%;
   }
 
   .dark {
-    /* Background: Pure black - authentic BVG */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 95%;
+    /* Linear Style Dark Mode */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 93%;
 
-    /* Cards: Near-black for subtle contrast */
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 93%;
 
-    /* Popovers */
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 93%;
 
-    /* Primary: Yellow (accent) */
     --primary: 54 100% 50%;
-    --primary-foreground: 0 0% 0%;
+    --primary-foreground: 0 0% 9%;
 
-    /* Secondary: Yellow */
-    --secondary: 54 100% 50%;
-    --secondary-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 93%;
 
-    /* Muted */
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
 
-    /* Accent: Yellow */
-    --accent: 54 100% 50%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 93%;
 
-    /* Borders: Yellow (accent) */
-    --border: 54 100% 50%;
-    --input: 54 100% 50%;
-    --ring: 54 100% 50%;
-
-    /* Destructive */
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 20%;
   }
 }
 
@@ -94,7 +72,7 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
   }
 }
 
@@ -103,61 +81,51 @@
     text-wrap: balance;
   }
 
-  .bvg-levitate {
-    @apply shadow-xl dark:shadow-bvg-yellow/10;
-    transform: translateY(-2px);
+  .glass-panel {
+    @apply bg-background/80 backdrop-blur-md border border-border/50 shadow-sm;
   }
 }
 
 @layer components {
-  /* BVG Card */
+  /* Linear-style Card */
   .bvg-card {
-    @apply bg-card border border-border shadow-sm rounded-2xl;
+    @apply bg-card border border-border/60 shadow-sm rounded-xl overflow-hidden transition-all duration-300;
   }
 
-  /* BVG Card Header - always black bg with yellow text */
+  /* Linear-style Header */
   .bvg-card-header {
-    @apply bg-black text-bvg-yellow border-b border-bvg-yellow rounded-t-2xl;
+    @apply bg-muted/30 border-b border-border/40 px-5 py-4;
   }
 
-  /* BVG Interactive Row */
+  /* Interactive Row */
   .bvg-row {
-    @apply bg-card text-card-foreground hover:bg-bvg-yellow hover:text-black transition-colors px-5 py-4;
-  }
-  .bvg-row:hover .bvg-text {
-    @apply text-black;
-  }
-  .bvg-row:hover .bvg-text-muted {
-    @apply text-gray-700;
+    @apply bg-transparent hover:bg-muted/10 transition-colors px-5 py-3 border-b border-border/40 last:border-0 cursor-pointer flex items-center justify-between;
   }
 
-  /* BVG Button Primary */
+  /* Subdued Button Primary (BVG vibe but Linear execution) */
   .bvg-btn-primary {
-    @apply bg-bvg-yellow text-black hover:bg-yellow-400 font-semibold transition-colors;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-medium transition-colors shadow-sm rounded-lg;
   }
 
-  /* BVG Button Outline */
+  /* Outline Button */
   .bvg-btn-outline {
-    @apply border border-black text-black hover:bg-bvg-yellow hover:text-black dark:border-bvg-yellow dark:text-bvg-yellow dark:hover:bg-bvg-yellow dark:hover:text-black font-medium transition-colors rounded-xl;
+    @apply border border-border bg-transparent hover:bg-muted text-foreground font-medium transition-colors rounded-lg shadow-sm;
   }
 
-  /* BVG Heading - yellow in dark mode */
+  /* Typography */
   .bvg-heading {
-    @apply text-black dark:text-bvg-yellow font-bold tracking-tight;
+    @apply text-foreground font-semibold tracking-tight;
   }
 
-  /* BVG Text Primary */
   .bvg-text {
-    @apply text-black dark:text-foreground;
+    @apply text-foreground;
   }
 
-  /* BVG Text Secondary */
   .bvg-text-secondary {
-    @apply text-gray-700 dark:text-gray-300;
+    @apply text-muted-foreground;
   }
 
-  /* BVG Text Muted */
   .bvg-text-muted {
-    @apply text-gray-600 dark:text-gray-400;
+    @apply text-muted-foreground text-sm;
   }
 }

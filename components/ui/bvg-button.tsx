@@ -1,9 +1,8 @@
 import { Button, ButtonProps } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { CSS_CLASSES } from '@/lib/config'
 
 interface BVGButtonProps extends Omit<ButtonProps, 'variant'> {
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'default' | 'destructive'
 }
 
 export function BVGButton({
@@ -12,20 +11,23 @@ export function BVGButton({
   size = 'sm',
   ...props
 }: BVGButtonProps) {
-  const variantClasses = {
-    primary: CSS_CLASSES.button.primary,
-    secondary: 'bg-bvg-yellow text-black hover:bg-yellow-400 border-black dark:border-bvg-yellow',
+  // Map our custom 'primary' to Shadcn's button with the custom bvg-btn-outline class
+  if (variant === 'primary') {
+    return (
+      <Button
+        variant="outline"
+        size={size}
+        className={cn('h-8 text-xs sm:text-sm font-medium bvg-btn-outline', className)}
+        {...props}
+      />
+    )
   }
 
   return (
     <Button
-      variant="outline"
+      variant={variant as any}
       size={size}
-      className={cn(
-        'h-8 text-xs sm:text-sm font-medium',
-        variantClasses[variant],
-        className
-      )}
+      className={cn('h-8 text-xs sm:text-sm font-medium shadow-sm', className)}
       {...props}
     />
   )

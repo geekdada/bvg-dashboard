@@ -46,28 +46,28 @@ export default async function TripPage({
     const durationMinutes = Math.floor(duration / 60000)
 
     return (
-      <div className="container mx-auto py-4 px-4 max-w-3xl">
+      <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl animate-in fade-in duration-700 slide-in-from-bottom-4">
         {/* Header */}
-        <div className="bvg-card p-4 mb-4">
+        <div className="bvg-card p-5 mb-6">
           <BackButton />
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5 mt-6">
             <LineBadge line={line} size="md" />
             <div className="flex-1 min-w-0">
-              <h1 className="text-lg sm:text-xl bvg-heading line-clamp-2">
+              <h1 className="text-xl sm:text-2xl font-semibold tracking-tight line-clamp-2">
                 {line.name} to {direction}
               </h1>
-              <div className="flex flex-wrap gap-2 mt-2">
+              <div className="flex flex-wrap gap-2 mt-3">
                 <Badge
                   variant="outline"
-                  className="bg-transparent border-black dark:border-bvg-yellow bvg-text"
+                  className="bg-transparent border-border text-muted-foreground"
                 >
                   {line.product.charAt(0).toUpperCase() + line.product.slice(1)}
                 </Badge>
                 {line.operator && (
                   <Badge
                     variant="outline"
-                    className="bg-transparent border-black dark:border-bvg-yellow bvg-text"
+                    className="bg-transparent border-border text-muted-foreground"
                   >
                     {line.operator.name}
                   </Badge>
@@ -75,15 +75,15 @@ export default async function TripPage({
                 {occupancy && (
                   <Badge
                     variant="outline"
-                    className={`flex items-center gap-1 bg-transparent border-black dark:border-bvg-yellow ${
+                    className={`flex items-center gap-1.5 bg-transparent border-border ${
                       occupancy === 'high'
-                        ? 'text-red-500'
+                        ? 'text-destructive'
                         : occupancy === 'medium'
                           ? 'text-yellow-600 dark:text-yellow-400'
                           : 'text-green-600 dark:text-green-400'
                     }`}
                   >
-                    <Users className="h-3 w-3" />
+                    <Users className="h-3.5 w-3.5" />
                     <span className="capitalize">{occupancy}</span>
                   </Badge>
                 )}
@@ -92,29 +92,29 @@ export default async function TripPage({
           </div>
 
           {/* Trip summary */}
-          <div className="mt-4 pt-4 border-t border-border">
+          <div className="mt-6 pt-5 border-t border-border/60">
             <div className="flex justify-between items-start">
               <div className="flex-1">
-                <div className="text-xs bvg-text-muted">Departure</div>
-                <div className="text-lg font-mono font-bold bvg-text">
+                <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Departure</div>
+                <div className="text-xl font-mono font-medium text-foreground">
                   {formatTime(departureTime)}
                 </div>
-                <div className="text-sm bvg-text-secondary truncate max-w-[120px] sm:max-w-none">
+                <div className="text-sm text-muted-foreground truncate max-w-[120px] sm:max-w-none mt-0.5">
                   {origin.stop.name}
                 </div>
               </div>
-              <div className="flex flex-col items-center px-2">
-                <Clock className="h-4 w-4 bvg-text-muted" />
-                <div className="text-sm font-bold bvg-text">
+              <div className="flex flex-col items-center px-4">
+                <Clock className="h-5 w-5 text-muted-foreground mb-1" />
+                <div className="text-sm font-medium text-foreground">
                   {durationMinutes} min
                 </div>
               </div>
               <div className="flex-1 text-right">
-                <div className="text-xs bvg-text-muted">Arrival</div>
-                <div className="text-lg font-mono font-bold bvg-text">
+                <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Arrival</div>
+                <div className="text-xl font-mono font-medium text-foreground">
                   {formatTime(arrivalTime)}
                 </div>
-                <div className="text-sm bvg-text-secondary truncate max-w-[120px] sm:max-w-none">
+                <div className="text-sm text-muted-foreground truncate max-w-[120px] sm:max-w-none mt-0.5">
                   {destination.stop.name}
                 </div>
               </div>
@@ -123,22 +123,22 @@ export default async function TripPage({
         </div>
 
         {/* Trip Route */}
-        <Card className="bvg-card mb-4 overflow-hidden">
+        <Card className="bvg-card mb-6">
           <CardHeader className="bvg-card-header">
-            <CardTitle className="text-base">Trip Route</CardTitle>
+            <CardTitle className="text-sm font-medium">Trip Route</CardTitle>
           </CardHeader>
-          <CardContent className="p-4">
+          <CardContent className="p-5">
             <TripStopovers stopovers={stopovers} />
           </CardContent>
         </Card>
 
         {/* Remarks */}
         {remarks && remarks.length > 0 && (
-          <Card className="bvg-card overflow-hidden">
+          <Card className="bvg-card">
             <CardHeader className="bvg-card-header">
-              <CardTitle className="text-base">Remarks</CardTitle>
+              <CardTitle className="text-sm font-medium">Remarks</CardTitle>
             </CardHeader>
-            <CardContent className="p-4">
+            <CardContent className="p-5">
               <RemarksDisplay
                 remarks={remarks}
                 className="bg-transparent p-0"

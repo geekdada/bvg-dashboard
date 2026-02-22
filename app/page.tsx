@@ -14,18 +14,18 @@ import { Heart } from 'lucide-react'
 
 export default function Home() {
   return (
-    <div className="container mx-auto py-6 sm:py-8 px-4 max-w-3xl">
+    <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl animate-in fade-in duration-700 slide-in-from-bottom-4">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="bg-black text-bvg-yellow px-4 py-2.5 text-2xl font-bold rounded-xl tracking-tight">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center h-10 w-10 bg-primary text-primary-foreground rounded-lg font-bold tracking-tight shadow-sm">
             BVG
           </div>
-          <Heart className="h-5 w-5 text-bvg-yellow fill-bvg-yellow" />
           <div>
-            <h1 className="text-xl sm:text-2xl bvg-heading">Departures</h1>
-            <p className="text-sm bvg-text-secondary">
+            <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">Departures</h1>
+            <p className="text-sm text-muted-foreground flex items-center gap-1.5">
               Berlin public transport
+              <Heart className="h-3.5 w-3.5 text-primary fill-primary" />
             </p>
           </div>
         </div>
@@ -39,62 +39,66 @@ export default function Home() {
       <NearbyStops />
 
       {/* Service Information */}
-      <Card className="bvg-card mb-6 overflow-hidden">
+      <Card className="bvg-card mb-8">
         <CardHeader className="bvg-card-header">
-          <CardTitle className="text-base sm:text-lg">
+          <CardTitle className="text-sm font-medium">
             Service Information
           </CardTitle>
-          <CardDescription className="text-xs bvg-text-secondary">
+          <CardDescription className="text-xs">
             Traffic news and timetable changes
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-0">
+        <CardContent className="p-0 flex flex-col">
           <a
             href="https://www.bvg.de/en/connections/traffic-news"
             target="_blank"
             rel="noopener noreferrer"
-            className="block bvg-row border-b border-black dark:border-bvg-yellow"
+            className="bvg-row group"
           >
-            <h3 className="font-medium">BVG Traffic News</h3>
-            <p className="text-sm bvg-text-muted mt-1">
-              Current disruptions and service updates
-            </p>
+            <div>
+              <h3 className="text-sm font-medium text-foreground transition-colors">BVG Traffic News</h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                Current disruptions and service updates
+              </p>
+            </div>
           </a>
           <a
             href="https://sbahn.berlin/en/plan-a-journey/timetable-changes/"
             target="_blank"
             rel="noopener noreferrer"
-            className="block bvg-row"
+            className="bvg-row group"
           >
-            <h3 className="font-medium">S-Bahn Timetable Changes</h3>
-            <p className="text-sm bvg-text-muted mt-1">
-              Planned service changes and updates
-            </p>
+            <div>
+              <h3 className="text-sm font-medium text-foreground transition-colors">S-Bahn Timetable Changes</h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                Planned service changes and updates
+              </p>
+            </div>
           </a>
         </CardContent>
       </Card>
 
       {/* Popular Stops */}
-      <Card className="bvg-card overflow-hidden">
+      <Card className="bvg-card">
         <CardHeader className="bvg-card-header">
-          <CardTitle className="text-base sm:text-lg">Popular Stops</CardTitle>
-          <CardDescription className="text-xs bvg-text-secondary">
+          <CardTitle className="text-sm font-medium">Popular Stops</CardTitle>
+          <CardDescription className="text-xs">
             Select a stop to view departures
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-0">
-          <div className="divide-y divide-black dark:divide-bvg-yellow">
-            {POPULAR_STOPS.map((stop) => (
-              <Link
-                key={stop.id}
-                href={`/stops/${stop.id}`}
-                className="block bvg-row"
-              >
-                <h3 className="font-medium">{stop.name}</h3>
-                <p className="text-sm bvg-text-muted mt-1">{stop.id}</p>
-              </Link>
-            ))}
-          </div>
+        <CardContent className="p-0 flex flex-col">
+          {POPULAR_STOPS.map((stop) => (
+            <Link
+              key={stop.id}
+              href={`/stops/${stop.id}`}
+              className="bvg-row group"
+            >
+              <div>
+                <h3 className="text-sm font-medium text-foreground transition-colors">{stop.name}</h3>
+                <p className="text-xs text-muted-foreground mt-1 font-mono">{stop.id}</p>
+              </div>
+            </Link>
+          ))}
         </CardContent>
       </Card>
     </div>
