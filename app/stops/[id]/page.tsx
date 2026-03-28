@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import DepartureList from "@/components/departure-list"
@@ -44,7 +45,9 @@ export default async function StopPage({ params }: { params: Promise<{ id: strin
           <StopHeader stop={stopInfo} />
         </div>
 
-        <DepartureList departures={data.departures || []} stopLocation={stopInfo.location} stopName={stopInfo.name} />
+        <Suspense>
+          <DepartureList departures={data.departures || []} stopLocation={stopInfo.location} stopName={stopInfo.name} />
+        </Suspense>
       </div>
     )
   } catch (error) {
