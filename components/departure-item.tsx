@@ -32,12 +32,12 @@ export default function DepartureItem({ departure }: DepartureItemProps) {
     <Link href={`/trips/${tripId}`} className="block group">
       <Card className="bvg-card p-4 sm:p-5 hover:bg-muted/10 transition-colors duration-200 border-border/50 hover:border-border/60">
         <div className="flex items-start gap-4">
-          {/* Line Badge wrapper for fixed width */}
-          <div className="flex-shrink-0 w-12 sm:w-14">
+          {/* Line Badge */}
+          <div className="flex-shrink-0">
             <div
-              className={`flex items-center justify-center w-full px-1 py-1.5 rounded-md text-white font-semibold text-sm text-center shadow-sm ${productColor}`}
+              className={`flex items-center justify-center min-w-12 sm:min-w-14 px-2 py-1.5 rounded-md text-white font-semibold text-sm text-center shadow-sm whitespace-nowrap ${productColor}`}
             >
-              <span className="truncate">{line.name}</span>
+              {line.name}
             </div>
           </div>
 
