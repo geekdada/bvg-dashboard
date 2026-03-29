@@ -5,7 +5,7 @@ import DepartureItem from './departure-item'
 import { BVGButton } from '@/components/ui/bvg-button'
 import { RefreshCw, Map } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useTransition, useMemo, useCallback } from 'react'
+import { useTransition, useMemo, useCallback, useState } from 'react'
 import { getGoogleMapsUrl, getProductIcon, getProductName, getProductHexColor } from '@/lib/utils'
 import { TRANSPORT_PRODUCTS } from '@/lib/config'
 import type { DepartureListProps } from '@/lib/types'
@@ -20,8 +20,12 @@ export default function DepartureList({
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
 
-  const activeProduct = searchParams.get('product') || 'all'
-  const activePlatform = searchParams.get('platform') || 'all'
+  const [activeProduct, setActiveProduct] = useState(
+    () => searchParams.get('product') || 'all'
+  )
+  const [activePlatform, setActivePlatform] = useState(
+    () => searchParams.get('platform') || 'all'
+  )
 
   const products = useMemo(() => {
     const productSet = new Set(departures.map((d) => d.line.product))
@@ -58,7 +62,7 @@ export default function DepartureList({
     return result
   }, [departures, activeProduct, activePlatform])
 
-  const updateParams = useCallback(
+  const updateUrl = useCallback(
     (product: string, platform?: string) => {
       const params = new URLSearchParams(searchParams.toString())
       if (product === 'all') {
@@ -73,23 +77,26 @@ export default function DepartureList({
         }
       }
       const query = params.toString()
-      router.replace(`?${query}`, { scroll: false })
+      window.history.replaceState(null, '', query ? `?${query}` : window.location.pathname)
     },
-    [router, searchParams]
+    [searchParams]
   )
 
   const handleProductChange = useCallback(
     (product: string) => {
-      updateParams(product)
+      setActiveProduct(product)
+      setActivePlatform('all')
+      updateUrl(product)
     },
-    [updateParams]
+    [updateUrl]
   )
 
   const handlePlatformChange = useCallback(
     (platform: string) => {
-      updateParams(activeProduct, platform)
+      setActivePlatform(platform)
+      updateUrl(activeProduct, platform)
     },
-    [updateParams, activeProduct]
+    [updateUrl, activeProduct]
   )
 
   const handleRefresh = () => {

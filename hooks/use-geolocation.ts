@@ -21,17 +21,19 @@ export function useGeolocation(): UseGeolocationReturn {
     isLoading: false,
   })
 
-  const requestLocation = useCallback(() => {
+  const requestLocation = useCallback((silent = false) => {
     if (!navigator.geolocation) {
-      setState(prev => ({
-        ...prev,
-        error: 'Geolocation is not supported by your browser',
-        isLoading: false,
-      }))
+      if (!silent) {
+        setState(prev => ({
+          ...prev,
+          error: 'Geolocation is not supported by your browser',
+          isLoading: false,
+        }))
+      }
       return
     }
 
-    setState(prev => ({ ...prev, isLoading: true, error: null }))
+    setState(prev => ({ ...prev, isLoading: !silent, error: null }))
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -43,6 +45,10 @@ export function useGeolocation(): UseGeolocationReturn {
         })
       },
       (error) => {
+        if (silent) {
+          setState(prev => ({ ...prev, isLoading: false }))
+          return
+        }
         let errorMessage: string
         switch (error.code) {
           case error.PERMISSION_DENIED:
@@ -71,8 +77,18 @@ export function useGeolocation(): UseGeolocationReturn {
     )
   }, [])
 
+  useEffect(() => {
+    if (!navigator.permissions || !navigator.geolocation) return
+
+    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+      if (result.state === 'granted') {
+        requestLocation(true)
+      }
+    })
+  }, [requestLocation])
+
   return {
     ...state,
-    requestLocation,
+    requestLocation: () => requestLocation(false),
   }
 }

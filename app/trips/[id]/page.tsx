@@ -47,12 +47,12 @@ export default async function TripPage({
     const durationMinutes = Math.floor(duration / 60000)
 
     return (
-      <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl animate-in fade-in duration-700 slide-in-from-bottom-4">
+      <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl">
         {/* Header */}
         <div className="bvg-card p-5 mb-6">
           <BackButton />
 
-          <div className="flex items-center gap-5 mt-6">
+          <div className="flex items-center gap-5">
             <LineBadge line={line} size="md" />
             <div className="flex-1 min-w-0">
               <h1 className="text-xl sm:text-2xl font-semibold tracking-tight line-clamp-2">
@@ -106,9 +106,9 @@ export default async function TripPage({
                   {origin.stop.name}
                 </div>
               </div>
-              <div className="flex flex-col items-center px-4">
+              <div className="flex flex-col items-center px-3">
                 <Clock className="h-5 w-5 text-muted-foreground mb-1" />
-                <div className="text-sm font-medium text-foreground">
+                <div className="text-sm font-medium text-foreground align-middle text-center text-nowrap">
                   {durationMinutes} min
                 </div>
               </div>
@@ -138,10 +138,10 @@ export default async function TripPage({
 
         {/* Trip Route */}
         <Card className="bvg-card mb-6">
-          <CardHeader className="bvg-card-header">
-            <CardTitle className="text-sm font-medium">Trip Route</CardTitle>
+          <CardHeader>
+            <CardTitle className="text-md">Trip Route</CardTitle>
           </CardHeader>
-          <CardContent className="p-5">
+          <CardContent className="pl-3">
             <TripStopovers stopovers={stopovers} />
           </CardContent>
         </Card>
@@ -149,10 +149,10 @@ export default async function TripPage({
         {/* Remarks */}
         {remarks && remarks.length > 0 && (
           <Card className="bvg-card">
-            <CardHeader className="bvg-card-header">
-              <CardTitle className="text-sm font-medium">Remarks</CardTitle>
+            <CardHeader>
+              <CardTitle className="text-md">Remarks</CardTitle>
             </CardHeader>
-            <CardContent className="p-5">
+            <CardContent>
               <RemarksDisplay
                 remarks={remarks}
                 className="bg-transparent p-0"

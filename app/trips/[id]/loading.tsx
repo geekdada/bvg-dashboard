@@ -1,14 +1,14 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { BackButton } from "@/components/back-button"
+import { Skeleton } from '@/components/ui/skeleton'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { BackButton } from '@/components/back-button'
 
 export default function Loading() {
   return (
-    <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl animate-in fade-in duration-700 min-h-[150vh]">
+    <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl min-h-[150vh]">
       <div className="bvg-card p-5 mb-6">
         <BackButton />
 
-        <div className="flex items-center gap-5 mt-6">
+        <div className="flex items-center gap-5">
           <Skeleton className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex-shrink-0" />
           <div className="flex-1 min-w-0">
             <Skeleton className="h-7 w-48 max-w-full mb-3" />

@@ -55,7 +55,7 @@ export default function NearbyStops() {
     <Card className="bvg-card mb-8">
       <CardHeader className="bvg-card-header flex flex-row items-center justify-between py-4">
         <div>
-          <CardTitle className="text-sm font-medium">Nearby Stops</CardTitle>
+          <CardTitle className="text-md">Nearby Stops</CardTitle>
           <CardDescription className="text-xs">
             Find stops closest to your current location
           </CardDescription>
@@ -64,7 +64,7 @@ export default function NearbyStops() {
           onClick={handleRequestLocation}
           variant="ghost"
           size="sm"
-          className="h-8 text-xs font-medium text-muted-foreground hover:text-foreground"
+          className="-mr-2 h-8 text-xs font-medium text-muted-foreground hover:text-foreground"
           disabled={isLoading}
         >
           {isLoading ? 'Locating...' : 'Update'}
@@ -79,15 +79,21 @@ export default function NearbyStops() {
               className="bvg-row group"
             >
               <div>
-                <h3 className="text-sm font-medium text-foreground transition-colors">{stop.name}</h3>
-                <p className="text-xs text-muted-foreground mt-1 font-mono">{stop.id}</p>
+                <h3 className="text-sm font-medium text-foreground transition-colors">
+                  {stop.name}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1 font-mono">
+                  {stop.id}
+                </p>
               </div>
             </Link>
           ))
         ) : (
           <div className="text-center py-8">
             {isLoading ? (
-              <p className="text-sm text-muted-foreground animate-pulse">Finding nearby stops...</p>
+              <p className="text-sm text-muted-foreground animate-pulse">
+                Finding nearby stops...
+              </p>
             ) : error ? (
               <div className="space-y-4 px-4">
                 <p className="text-sm text-destructive">{error}</p>

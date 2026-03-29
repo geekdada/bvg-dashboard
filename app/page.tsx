@@ -14,7 +14,7 @@ import { Heart } from 'lucide-react'
 
 export default function Home() {
   return (
-    <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl animate-in fade-in duration-700 slide-in-from-bottom-4">
+    <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
@@ -22,7 +22,9 @@ export default function Home() {
             BVG
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">Departures</h1>
+            <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">
+              Departures
+            </h1>
             <p className="text-sm text-muted-foreground flex items-center gap-1.5">
               Berlin public transport
               <Heart className="h-3.5 w-3.5 text-primary fill-primary" />
@@ -41,9 +43,7 @@ export default function Home() {
       {/* Service Information */}
       <Card className="bvg-card mb-8">
         <CardHeader className="bvg-card-header">
-          <CardTitle className="text-sm font-medium">
-            Service Information
-          </CardTitle>
+          <CardTitle className="text-md">Service Information</CardTitle>
           <CardDescription className="text-xs">
             Traffic news and timetable changes
           </CardDescription>
@@ -56,7 +56,9 @@ export default function Home() {
             className="bvg-row group"
           >
             <div>
-              <h3 className="text-sm font-medium text-foreground transition-colors">BVG Traffic News</h3>
+              <h3 className="text-sm font-medium text-foreground transition-colors">
+                BVG Traffic News
+              </h3>
               <p className="text-xs text-muted-foreground mt-1">
                 Current disruptions and service updates
               </p>
@@ -69,7 +71,9 @@ export default function Home() {
             className="bvg-row group"
           >
             <div>
-              <h3 className="text-sm font-medium text-foreground transition-colors">S-Bahn Timetable Changes</h3>
+              <h3 className="text-sm font-medium text-foreground transition-colors">
+                S-Bahn Timetable Changes
+              </h3>
               <p className="text-xs text-muted-foreground mt-1">
                 Planned service changes and updates
               </p>
@@ -81,7 +85,7 @@ export default function Home() {
       {/* Popular Stops */}
       <Card className="bvg-card">
         <CardHeader className="bvg-card-header">
-          <CardTitle className="text-sm font-medium">Popular Stops</CardTitle>
+          <CardTitle className="text-md">Popular Stops</CardTitle>
           <CardDescription className="text-xs">
             Select a stop to view departures
           </CardDescription>
@@ -94,8 +98,12 @@ export default function Home() {
               className="bvg-row group"
             >
               <div>
-                <h3 className="text-sm font-medium text-foreground transition-colors">{stop.name}</h3>
-                <p className="text-xs text-muted-foreground mt-1 font-mono">{stop.id}</p>
+                <h3 className="text-sm font-medium text-foreground transition-colors">
+                  {stop.name}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1 font-mono">
+                  {stop.id}
+                </p>
               </div>
             </Link>
           ))}

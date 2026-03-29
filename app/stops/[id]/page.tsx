@@ -28,7 +28,7 @@ export default async function StopPage({ params }: { params: Promise<{ id: strin
     }
 
     return (
-      <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl animate-in fade-in duration-700 slide-in-from-bottom-4">
+      <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl">
         {/* Header */}
         <div className="bvg-card p-5 mb-8">
           <Button
