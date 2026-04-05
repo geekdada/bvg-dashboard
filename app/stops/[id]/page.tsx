@@ -15,46 +15,18 @@ export default async function StopPage({ params }: { params: Promise<{ id: strin
     return notFound()
   }
 
+  let data: Awaited<ReturnType<typeof fetchDepartures>> | null = null
+
   try {
-    // Fetch all data in one request
-    const data = await fetchDepartures(stopId)
-
-    // Extract stop info from the first departure if available
-    const stopInfo =
-      data.departures && data.departures.length > 0 ? data.departures[0].stop : undefined
-
-    if (!stopInfo) {
-      return notFound()
-    }
-
-    return (
-      <div className="container mx-auto py-8 sm:py-12 px-4 max-w-3xl">
-        {/* Header */}
-        <div className="bvg-card p-5 mb-8">
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-            className="bvg-btn-outline mb-6"
-          >
-            <Link href="/">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <StopHeader stop={stopInfo} />
-        </div>
-
-        <Suspense>
-          <DepartureList departures={data.departures || []} stopLocation={stopInfo.location} stopName={stopInfo.name} />
-        </Suspense>
-      </div>
-    )
+    data = await fetchDepartures(stopId)
   } catch (error) {
     console.error("Error fetching data:", error)
+  }
+
+  if (!data) {
     return (
-      <div className="container mx-auto py-4 px-4 max-w-3xl">
-        <div className="bvg-card p-4 mb-6">
+      <div className="page-shell">
+        <div className="bvg-card mb-6 p-6">
           <Button
             variant="outline"
             size="sm"
@@ -66,12 +38,50 @@ export default async function StopPage({ params }: { params: Promise<{ id: strin
               Back
             </Link>
           </Button>
-          <h1 className="text-xl font-bold text-red-500">Error Loading Departures</h1>
+          <div className="station-label">Board unavailable</div>
+          <h1 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-foreground">
+            Couldn&apos;t load this stop board
+          </h1>
+          <p className="mt-3 max-w-xl text-sm text-muted-foreground">
+            The departure board for stop ID{' '}
+            <span className="font-mono tabular-nums text-foreground">
+              {stopId}
+            </span>{' '}
+            is not available right now. Please check the ID or try again in a
+            moment.
+          </p>
         </div>
-        <p className="text-red-500">
-          Could not load departures for stop ID: {stopId}. Please check if the stop ID is correct.
-        </p>
       </div>
     )
   }
+
+  const stopInfo =
+    data.departures && data.departures.length > 0 ? data.departures[0].stop : undefined
+
+  if (!stopInfo) {
+    return notFound()
+  }
+
+  return (
+    <div className="page-shell">
+      <div className="bvg-card mb-8 p-6 sm:p-8">
+        <Button
+          variant="outline"
+          size="sm"
+          asChild
+          className="bvg-btn-outline mb-6"
+        >
+          <Link href="/">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Link>
+        </Button>
+        <StopHeader stop={stopInfo} />
+      </div>
+
+      <Suspense>
+        <DepartureList departures={data.departures || []} stopLocation={stopInfo.location} stopName={stopInfo.name} />
+      </Suspense>
+    </div>
+  )
 }

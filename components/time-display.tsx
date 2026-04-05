@@ -9,11 +9,11 @@ interface TimeDisplayProps {
 export default function TimeDisplay({ time, className = "", variant = "default" }: TimeDisplayProps) {
   if (!time) return null
 
-  const baseClasses = "font-mono"
+  const baseClasses = "font-mono tabular-nums"
 
   const variantClasses = {
     default: "text-sm text-foreground",
-    badge: "bg-primary text-primary-foreground px-2 py-1 rounded-md text-sm font-medium inline-block tracking-wide shadow-sm"
+    badge: "inline-flex items-center rounded-full border border-primary/40 bg-primary px-3 py-1.5 text-sm font-semibold tracking-[0.16em] text-primary-foreground shadow-[0_18px_36px_-24px_hsl(var(--primary)/0.8)]"
   }
 
   return (

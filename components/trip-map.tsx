@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import { useTheme } from 'next-themes'
 import Map, { Source, Layer, Marker } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -19,17 +19,11 @@ export default function TripMap({
   lineColor = '#FFD700',
 }: TripMapProps) {
   const [mapError, setMapError] = useState(false)
-  const { theme, systemTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const currentTheme = theme === 'system' ? systemTheme : theme
+  const { resolvedTheme } = useTheme()
+  const currentTheme = resolvedTheme === 'dark' ? 'dark' : 'light'
 
   const mapStyle =
-    mounted && currentTheme === 'dark'
+    currentTheme === 'dark'
       ? 'mapbox://styles/mapbox/dark-v11'
       : 'mapbox://styles/mapbox/light-v11'
 
@@ -125,8 +119,8 @@ export default function TripMap({
   // If map error (like quota exceeded) or no token, gracefully fallback
   if (!mapboxToken || mapError) {
     return (
-      <div className="w-full h-[300px] flex flex-col items-center justify-center bg-muted/30 rounded-lg border border-border/50 text-muted-foreground p-4 text-center">
-        <MapPin className="h-8 w-8 mb-2 opacity-50" />
+      <div className="flex h-[320px] w-full flex-col items-center justify-center rounded-[1.35rem] border border-border/60 bg-muted/20 p-4 text-center text-muted-foreground">
+        <MapPin className="mb-2 h-8 w-8 opacity-50" />
         <p className="text-sm font-medium">Map preview currently unavailable</p>
         {!mapboxToken && (
           <p className="text-xs mt-1">Mapbox access token is not configured.</p>
@@ -137,7 +131,7 @@ export default function TripMap({
   }
 
   return (
-    <div className="w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden relative border border-border">
+    <div className="relative h-[320px] w-full overflow-hidden rounded-[1.35rem] border border-border/60 bg-muted/20 md:h-[420px]">
       <Map
         mapboxAccessToken={mapboxToken}
         initialViewState={initialViewState}

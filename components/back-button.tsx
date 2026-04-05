@@ -12,7 +12,7 @@ export function BackButton() {
       variant="outline"
       size="sm"
       onClick={() => router.back()}
-      className="bvg-btn-outline mb-6"
+      className="mb-6 h-10 px-4 bvg-btn-outline"
     >
       <ArrowLeft className="h-4 w-4 mr-2" />
       Back

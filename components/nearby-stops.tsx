@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { useGeolocation } from '@/hooks/use-geolocation'
 import { findNearbyStops } from '@/lib/api'
 import type { SearchResponse } from '@/lib/types'
+import { ArrowUpRight, LocateFixed } from 'lucide-react'
 
 export default function NearbyStops() {
   const {
@@ -52,22 +53,24 @@ export default function NearbyStops() {
   const isLoading = geoLoading || stopsLoading
 
   return (
-    <Card className="bvg-card mb-8">
-      <CardHeader className="bvg-card-header flex flex-row items-center justify-between py-4">
+    <Card className="bvg-card">
+      <CardHeader className="bvg-card-header flex flex-row items-center justify-between gap-4 py-4">
         <div>
-          <CardTitle className="text-md">Nearby Stops</CardTitle>
-          <CardDescription className="text-xs">
-            Find stops closest to your current location
+          <div className="section-kicker">Closest board</div>
+          <CardTitle className="mt-2 text-md">Nearby stops</CardTitle>
+          <CardDescription className="mt-1 text-xs">
+            Find the nearest station boards from your current location.
           </CardDescription>
         </div>
         <Button
           onClick={handleRequestLocation}
-          variant="ghost"
+          variant="outline"
           size="sm"
-          className="-mr-2 h-8 text-xs font-medium text-muted-foreground hover:text-foreground"
+          className="h-9 gap-2 px-3.5 bvg-btn-outline"
           disabled={isLoading}
         >
-          {isLoading ? 'Locating...' : 'Update'}
+          <LocateFixed className="h-3.5 w-3.5" />
+          {isLoading ? 'Locating...' : 'Locate me'}
         </Button>
       </CardHeader>
       <CardContent className="p-0 flex flex-col">
@@ -78,24 +81,27 @@ export default function NearbyStops() {
               href={`/stops/${stop.id}`}
               className="bvg-row group"
             >
-              <div>
-                <h3 className="text-sm font-medium text-foreground transition-colors">
+              <div className="min-w-0">
+                <h3 className="truncate text-sm font-medium text-foreground transition-colors">
                   {stop.name}
                 </h3>
-                <p className="text-xs text-muted-foreground mt-1 font-mono">
+                <p className="mt-1 font-mono text-xs text-muted-foreground tabular-nums">
                   {stop.id}
                 </p>
               </div>
+              <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
             </Link>
           ))
         ) : (
-          <div className="text-center py-8">
+          <div className="px-5 py-8 text-center">
             {isLoading ? (
-              <p className="text-sm text-muted-foreground animate-pulse">
-                Finding nearby stops...
-              </p>
+              <div className="panel-inset p-5">
+                <p className="text-sm text-muted-foreground animate-pulse">
+                  Finding nearby stops...
+                </p>
+              </div>
             ) : error ? (
-              <div className="space-y-4 px-4">
+              <div className="space-y-4">
                 <p className="text-sm text-destructive">{error}</p>
                 <Button
                   onClick={handleRequestLocation}
@@ -107,7 +113,7 @@ export default function NearbyStops() {
                 </Button>
               </div>
             ) : stopsError ? (
-              <div className="space-y-4 px-4">
+              <div className="space-y-4">
                 <p className="text-sm text-destructive">{stopsError}</p>
                 <Button
                   onClick={() =>
@@ -123,14 +129,20 @@ export default function NearbyStops() {
                 </Button>
               </div>
             ) : (
-              <Button
-                onClick={handleRequestLocation}
-                variant="outline"
-                size="sm"
-                className="bvg-btn-outline"
-              >
-                Request Location
-              </Button>
+              <div className="panel-inset space-y-4 p-5">
+                <p className="text-sm text-muted-foreground">
+                  Let the app use your location to surface the closest Berlin
+                  stops.
+                </p>
+                <Button
+                  onClick={handleRequestLocation}
+                  variant="outline"
+                  size="sm"
+                  className="bvg-btn-outline"
+                >
+                  Request location
+                </Button>
+              </div>
             )}
           </div>
         )}

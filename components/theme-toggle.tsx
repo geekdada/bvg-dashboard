@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 
@@ -15,24 +14,32 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <Button variant="outline" size="icon" className="h-9 w-9 bvg-btn-outline">
-        <Sun className="h-5 w-5" />
+      <Button variant="outline" size="sm" className="h-10 gap-2 px-3.5 bvg-btn-outline">
+        <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+        <span className="text-[0.68rem] font-semibold uppercase tracking-[0.22em]">
+          Underground
+        </span>
       </Button>
     )
   }
 
+  const isDark = theme === 'dark'
+
   return (
     <Button
       variant="outline"
-      size="icon"
-      className="h-9 w-9 bvg-btn-outline"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      size="sm"
+      className="h-10 gap-2 px-3.5 bvg-btn-outline"
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >
-      {theme === 'dark' ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
+      <span
+        className={`h-2.5 w-2.5 rounded-full transition-colors ${
+          isDark ? 'bg-primary' : 'bg-foreground/70'
+        }`}
+      />
+      <span className="text-[0.68rem] font-semibold uppercase tracking-[0.22em]">
+        {isDark ? 'Underground' : 'Daylight'}
+      </span>
       <span className="sr-only">Toggle theme</span>
     </Button>
   )

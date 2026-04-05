@@ -47,6 +47,21 @@ This is a Next.js 15 dashboard application for displaying real-time BVG (Berlin 
 - Dark mode support via next-themes
 - Custom CSS variables for consistent theming
 
+### Design Guidelines
+
+- Aim for a **Berlin underground** aesthetic: moody, calm, utility-first, and high-contrast rather than glossy SaaS styling
+- Keep **BVG yellow** for strong accents, active states, and key time markers; avoid using bright yellow for small light-mode text
+- Prefer darker accent text tones on light backgrounds for readability
+- Use signage-inspired hierarchy: compact uppercase kickers, bold destination names, and tabular numerals for times
+- Departure cards should prioritize scan order on mobile: line, destination, time, relative time/delay, then secondary metadata
+- Keep mobile layouts dense but breathable; reduce vertical waste before shrinking text
+- Search results should appear as a floating popup surface, not an inline expanding block
+- Filter tabs should use a fixed outer shell with only the inner tab content scrolling horizontally when needed
+- Platform and product filters should have distinct sizing so nested controls read as secondary navigation
+- Remarks/actions on small screens should stay compact and icon-first while preserving accessible labels
+- Prefer rounded panel surfaces, subtle borders, and visible layered shadows to preserve depth across light and dark themes
+- Maintain visible focus states, keyboard navigation, and touch-friendly targets for all interactive controls
+
 ### Key Features
 
 - Real-time departure information

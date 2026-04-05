@@ -31,18 +31,16 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
 
         return (
           <div key={`${stopover.stop.id}-${index}`} className="relative">
-            {/* Timeline line */}
             {!isLast && (
               <div
-                className={`absolute left-[11px] top-8 bottom-[-8px] w-[2px] ${isPast ? 'bg-muted' : 'bg-primary/30'}`}
+                className={`absolute left-[14px] top-10 bottom-[-8px] w-[2px] ${isPast ? 'bg-muted/70' : 'bg-primary/40'}`}
               />
             )}
 
-            <div className="flex items-start gap-4 py-3">
-              {/* Timeline dot */}
-              <div className="relative z-10 mt-1.5 flex h-6 w-6 items-center justify-center">
+            <div className="flex items-start gap-4 py-4">
+              <div className="relative z-10 mt-1.5 flex h-7 w-7 items-center justify-center">
                 <div
-                  className={`rounded-full shadow-sm ring-4 ring-card transition-all ${isCurrent ? 'bg-primary ring-primary/20 h-3 w-3' : isPast ? 'bg-muted h-2.5 w-2.5' : 'bg-primary h-2.5 w-2.5'}`}
+                  className={`rounded-full shadow-sm ring-4 ring-card transition-all ${isCurrent ? 'h-3.5 w-3.5 bg-primary ring-primary/20' : isPast ? 'h-2.5 w-2.5 bg-muted' : 'h-3 w-3 bg-primary/90'}`}
                 />
               </div>
 
@@ -50,26 +48,24 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                 <div className="flex justify-between items-start gap-3">
                   <div className="min-w-0">
                     <h3
-                      className={`font-medium truncate text-foreground transition-colors ${isPast ? 'text-muted-foreground' : ''}`}
+                      className={`truncate text-base font-medium tracking-[-0.02em] text-foreground transition-colors ${isPast ? 'text-muted-foreground' : ''}`}
                     >
                       {stopover.stop.name}
                     </h3>
 
-                    {/* Platform info */}
                     {(stopover.arrivalPlatform ||
                       stopover.departurePlatform) && (
-                      <div className="text-xs text-muted-foreground mt-0.5">
+                      <div className="mt-1 text-xs uppercase tracking-[0.14em] text-muted-foreground">
                         Platform{' '}
                         {stopover.departurePlatform || stopover.arrivalPlatform}
                       </div>
                     )}
 
-                    {/* Occupancy */}
                     {stopover.occupancy && (
                       <div className="flex items-center mt-2">
                         <Badge
                           variant="outline"
-                          className={`text-xs flex items-center gap-1.5 border-border bg-transparent ${
+                          className={`flex items-center gap-1.5 rounded-full border-border/70 bg-muted/20 px-3 py-1 text-[0.68rem] uppercase tracking-[0.14em] ${
                             stopover.occupancy === 'high'
                               ? 'text-destructive'
                               : stopover.occupancy === 'medium'
@@ -91,9 +87,7 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                       <div className="flex flex-col items-end">
                         <TimeDisplay
                           time={stopover.departure || stopover.arrival}
-                          className={
-                            isPast ? 'text-muted-foreground' : 'text-foreground'
-                          }
+                          className={isPast ? 'opacity-75' : ''}
                         />
                         <DelayDisplay
                           delay={
@@ -107,14 +101,12 @@ export default function TripStopovers({ stopovers }: { stopovers: any[] }) {
                   </div>
                 </div>
 
-                {/* Current indicator */}
                 {isCurrent && (
-                  <div className="mt-2 text-[10px] uppercase tracking-wider bg-primary/10 text-primary px-2 py-1 rounded font-semibold inline-block">
+                  <div className="signal-text mt-3 inline-block rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em]">
                     Currently here
                   </div>
                 )}
 
-                {/* Remarks */}
                 {stopover.remarks && stopover.remarks.length > 0 && (
                   <RemarksDisplay remarks={stopover.remarks} className="mt-3" />
                 )}

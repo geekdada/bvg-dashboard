@@ -24,7 +24,7 @@ export default function DelayDisplay({ delay = 0, className = "", size = "md" }:
   }
 
   return (
-    <div className={`font-mono flex items-center gap-1 whitespace-nowrap ${delayClass} ${className}`}>
+    <div className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-current/10 bg-background/40 px-2.5 py-1 font-mono tabular-nums ${delayClass} ${className}`}>
       <DelayIcon className={iconClasses[size]} />
       <span className={textClasses[size]}>{formatDelay(delay)}</span>
     </div>

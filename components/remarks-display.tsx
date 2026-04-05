@@ -82,19 +82,19 @@ export default function RemarksDisplay({
   return (
     <div
       className={cn(
-        'flex flex-col gap-2 bg-muted/50 p-2 lg:px-4 lg:py-3 rounded',
+        'flex flex-col gap-3 rounded-[1.1rem] border border-border/60 bg-muted/30 p-3 lg:px-4 lg:py-4',
         className
       )}
     >
       <div
-        className="text-xs sm:text-sm text-gray-600 dark:text-gray-400"
+        className="text-xs sm:text-sm text-muted-foreground"
         onClick={handleClick}
       >
         {remarks.map((remark, i) => (
           <React.Fragment key={i}>
             {i !== 0 && <span> | </span>}
             <span
-              className="[&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300 [&_a]:relative [&_a]:z-10"
+              className="[&_a]:relative [&_a]:z-10 [&_a]:underline [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:opacity-80 [&_a]:text-[hsl(var(--signal-ink))]"
               dangerouslySetInnerHTML={{
                 __html: remark.text || remark.summary || '',
               }}
@@ -105,21 +105,25 @@ export default function RemarksDisplay({
       <div className="flex gap-2">
         <button
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-md transition-colors"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/70 bg-background/60 text-xs font-medium text-muted-foreground transition-all duration-200 hover:border-primary/30 hover:text-foreground sm:h-auto sm:w-auto sm:gap-1.5 sm:px-3 sm:py-2"
           title="Copy remarks"
+          aria-label="Copy remarks"
         >
           {copied ? (
             <Check className="w-3.5 h-3.5" />
           ) : (
             <Copy className="w-3.5 h-3.5" />
           )}
+          <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
         </button>
         <button
           onClick={handleTranslate}
-          className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-md transition-colors"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/70 bg-background/60 text-xs font-medium text-muted-foreground transition-all duration-200 hover:border-primary/30 hover:text-foreground sm:h-auto sm:w-auto sm:gap-1.5 sm:px-3 sm:py-2"
           title="Translate remarks"
+          aria-label="Translate remarks"
         >
           <Languages className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Translate</span>
         </button>
       </div>
     </div>

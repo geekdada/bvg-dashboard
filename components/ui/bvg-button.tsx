@@ -11,13 +11,12 @@ export function BVGButton({
   size = 'sm',
   ...props
 }: BVGButtonProps) {
-  // Map our custom 'primary' to Shadcn's button with the custom bvg-btn-outline class
   if (variant === 'primary') {
     return (
       <Button
-        variant="outline"
+        variant="default"
         size={size}
-        className={cn('h-8 text-xs sm:text-sm font-medium bvg-btn-outline', className)}
+        className={cn('h-9 text-xs sm:text-sm font-medium', className)}
         {...props}
       />
     )
@@ -27,7 +26,7 @@ export function BVGButton({
     <Button
       variant={variant as any}
       size={size}
-      className={cn('h-8 text-xs sm:text-sm font-medium shadow-sm', className)}
+      className={cn('h-9 text-xs sm:text-sm font-medium', className)}
       {...props}
     />
   )

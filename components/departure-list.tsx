@@ -113,44 +113,58 @@ export default function DepartureList({
     }
   }
 
-  const tabClass = (isActive: boolean) =>
-    `flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-medium rounded-md px-3 py-1.5 transition-all cursor-pointer ${
+  const productTabClass = (isActive: boolean) =>
+    `flex-shrink-0 inline-flex min-h-11 items-center gap-2 rounded-full px-4 py-2.5 text-xs font-medium uppercase tracking-[0.14em] whitespace-nowrap transition-all cursor-pointer ${
       isActive
-        ? 'bg-background text-foreground shadow-sm'
-        : 'text-muted-foreground hover:text-foreground'
+        ? 'bg-primary text-primary-foreground shadow-[0_18px_36px_-24px_hsl(var(--primary)/0.8)]'
+        : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
+    }`
+
+  const platformTabClass = (isActive: boolean) =>
+    `flex-shrink-0 inline-flex min-h-10 items-center justify-center rounded-full px-3.5 py-2 text-[0.72rem] font-medium uppercase tracking-[0.12em] whitespace-nowrap transition-all cursor-pointer ${
+      isActive
+        ? 'bg-primary text-primary-foreground shadow-[0_18px_36px_-24px_hsl(var(--primary)/0.8)]'
+        : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
     }`
 
   return (
     <div>
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-semibold tracking-tight text-foreground">
-          Departures
-        </h2>
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-3">
+          <div className="station-label">Live platform board</div>
+          <div>
+            <h2 className="text-2xl font-semibold tracking-[-0.04em] text-foreground sm:text-3xl">
+              Departures
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {departures.length}{' '}
+              {departures.length === 1 ? 'service is' : 'services are'} on this
+              board right now.
+            </p>
+          </div>
+        </div>
         <div className="flex gap-2">
           {stopLocation && (
             <BVGButton
               onClick={openInGoogleMaps}
               title="Open in Google Maps"
-              className="flex items-center gap-2"
+              className="flex h-10 items-center gap-2 px-4"
               variant="outline"
             >
               <Map className="h-4 w-4" />
-              <span className="hidden sm:inline">Map</span>
+              <span>Map</span>
             </BVGButton>
           )}
           <BVGButton
             onClick={handleRefresh}
             disabled={isPending}
-            className="flex items-center gap-2"
+            className="flex h-10 items-center gap-2 px-4"
             variant="outline"
           >
             <RefreshCw
               className={`h-4 w-4 ${isPending ? 'animate-spin' : ''}`}
             />
-            <span className="hidden sm:inline">
-              {isPending ? 'Refreshing...' : 'Refresh'}
-            </span>
+            <span>{isPending ? 'Refreshing...' : 'Refresh'}</span>
           </BVGButton>
         </div>
       </div>
@@ -158,64 +172,69 @@ export default function DepartureList({
       {departures.length === 0 ? (
         <Card className="bvg-card">
           <CardContent className="py-12">
-            <p className="text-center text-sm text-muted-foreground">
-              No departures found
-            </p>
+            <div className="mx-auto max-w-md text-center">
+              <div className="section-kicker">No live services</div>
+              <p className="mt-3 text-sm text-muted-foreground">
+                No departures are available for this stop right now. Try a
+                refresh or return later.
+              </p>
+            </div>
           </CardContent>
         </Card>
       ) : (
         <div className="w-full">
-          {/* Product tabs */}
-          <div className="mb-4 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 rounded-md overflow-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <div className="inline-flex h-9 items-center justify-start bg-muted/50 p-1 text-muted-foreground w-max min-w-full sm:min-w-0 rounded-lg">
-              <button
-                onClick={() => handleProductChange('all')}
-                className={tabClass(activeProduct === 'all')}
-              >
-                All
-              </button>
-              {products.map((product) => (
+          <div className="mb-4 overflow-hidden rounded-[1.35rem] border border-border/60 bg-card/75 backdrop-blur-sm">
+            <div className="overflow-x-auto p-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <div className="inline-flex min-w-max items-center justify-start gap-1.5">
                 <button
-                  key={product}
-                  onClick={() => handleProductChange(product)}
-                  className={tabClass(activeProduct === product)}
+                  onClick={() => handleProductChange('all')}
+                  className={productTabClass(activeProduct === 'all')}
                 >
-                  <span
-                    className="inline-flex items-center justify-center w-5 h-5 rounded text-[10px] font-bold leading-none"
-                    style={{ backgroundColor: `${getProductHexColor(product)}18`, color: getProductHexColor(product) }}
-                  >
-                    {getProductIcon(product)}
-                  </span>
-                  <span>{getProductName(product)}</span>
+                  All
                 </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Platform sub-tabs */}
-          {activeProduct !== 'all' && platformsForProduct.length > 1 && (
-            <div className="mb-6 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 rounded-md overflow-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <div className="inline-flex h-8 items-center justify-start bg-muted/30 p-1 text-muted-foreground w-max min-w-full sm:min-w-0 rounded-lg">
-                <button
-                  onClick={() => handlePlatformChange('all')}
-                  className={tabClass(activePlatform === 'all')}
-                >
-                  All Platforms
-                </button>
-                {platformsForProduct.map((p) => (
+                {products.map((product) => (
                   <button
-                    key={p}
-                    onClick={() => handlePlatformChange(p)}
-                    className={tabClass(activePlatform === p)}
+                    key={product}
+                    onClick={() => handleProductChange(product)}
+                    className={productTabClass(activeProduct === product)}
                   >
-                    Pl. {p}
+                    <span
+                      className="inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold leading-none"
+                      style={{ backgroundColor: `${getProductHexColor(product)}18`, color: getProductHexColor(product) }}
+                    >
+                      {getProductIcon(product)}
+                    </span>
+                    <span>{getProductName(product)}</span>
                   </button>
                 ))}
               </div>
             </div>
+          </div>
+
+          {activeProduct !== 'all' && platformsForProduct.length > 1 && (
+            <div className="mb-6 overflow-hidden rounded-[1.2rem] border border-border/60 bg-muted/20 sm:ml-4">
+              <div className="overflow-x-auto p-1.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <div className="inline-flex min-w-max items-center justify-start gap-1">
+                  <button
+                    onClick={() => handlePlatformChange('all')}
+                    className={platformTabClass(activePlatform === 'all')}
+                  >
+                    All platforms
+                  </button>
+                  {platformsForProduct.map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => handlePlatformChange(p)}
+                      className={platformTabClass(activePlatform === p)}
+                    >
+                      Pl. {p}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           )}
 
-          {/* Departures list */}
           <div className="space-y-3">
             {filteredDepartures.map((departure) => (
               <DepartureItem
@@ -226,9 +245,13 @@ export default function DepartureList({
             {filteredDepartures.length === 0 && (
               <Card className="bvg-card">
                 <CardContent className="py-12">
-                  <p className="text-center text-sm text-muted-foreground">
-                    No departures for this filter
-                  </p>
+                  <div className="mx-auto max-w-md text-center">
+                    <div className="section-kicker">Filtered out</div>
+                    <p className="mt-3 text-sm text-muted-foreground">
+                      No departures match the current product or platform
+                      selection.
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             )}
