@@ -1,24 +1,12 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { BackButton } from '@/components/back-button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Loading() {
   return (
     <div className="page-shell min-h-[150vh]">
       <div className="bvg-card mb-8 p-6 sm:p-8">
-        <Button
-          variant="outline"
-          size="sm"
-          asChild
-          className="mb-6 h-10 px-4 bvg-btn-outline"
-        >
-          <Link href="/">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Link>
-        </Button>
+        <BackButton />
 
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div className="flex items-start gap-4">
@@ -32,7 +20,11 @@ export default function Loading() {
               </div>
             </div>
           </div>
-          <Skeleton className="h-24 rounded-[1.1rem]" />
+          <div className="panel-inset max-w-sm p-4">
+            <Skeleton className="h-4 w-28" />
+            <Skeleton className="mt-3 h-4 w-full" />
+            <Skeleton className="mt-2 h-4 w-5/6" />
+          </div>
         </div>
       </div>
 
